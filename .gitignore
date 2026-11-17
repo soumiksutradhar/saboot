@@ -1,0 +1,7 @@
+virenv/
+.venv/
+__pycache__/
+*.pyc
+saboot.db
+.env
+.vercel
