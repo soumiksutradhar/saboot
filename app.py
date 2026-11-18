@@ -681,6 +681,8 @@ def resolve_day(cid, day_id):
         db.execute("INSERT INTO wallet_tx(phone,role,kind,amt,note,ts) VALUES(?,?,?,?,?,?)", (c["wrk_phone"], "worker", "pay", d["amt"], f"{cid} · Dispute settled", ts))
         append_event(db, cid, c["contract_hash"], "p", 1, d["amt"], ts)
     else:
+        if c["escrow_lock"] < d["amt"]:
+            return jsonify({"error": "Insufficient escrow locked to refund"}), 400
         db.execute("UPDATE contracts SET escrow_lock = escrow_lock - ? WHERE id=?", (d["amt"], cid))
         db.execute("UPDATE escrow_days SET status='refunded' WHERE id=?", (day_id,))
         db.execute("UPDATE users SET wallet_balance = wallet_balance + ? WHERE phone=? AND role='employer'", (d["amt"], c["emp_phone"]))
