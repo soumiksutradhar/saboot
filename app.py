@@ -1,3 +1,4 @@
+import asyncio
 import hashlib
 import io
 import json
@@ -9,7 +10,8 @@ import time
 from datetime import datetime, timezone
 from functools import wraps
 
-from flask import Flask, g, jsonify, request, send_file, send_from_directory
+import edge_tts
+from flask import Flask, Response, g, jsonify, request, send_file, send_from_directory
 from flask_cors import CORS
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
@@ -357,6 +359,45 @@ def index():
 @app.route("/api/health")
 def health():
     return jsonify({"ok": True, "service": "saboot-flask", "time_ms": now_ms()})
+   
+
+EDGE_VOICES = {
+    "en": "en-IN-NeerjaNeural",
+    "hi": "hi-IN-SwaraNeural",
+    "bn": "bn-IN-TanishaaNeural",
+    "mr": "mr-IN-AarohiNeural",
+    "gu": "gu-IN-DhwaniNeural",
+    "ta": "ta-IN-PallaviNeural",
+    "te": "te-IN-ShrutiNeural",
+    "kn": "kn-IN-SapnaNeural",
+    "ml": "ml-IN-SobhanaNeural",
+    "ur": "ur-IN-GulNeural",
+    "ne": "ne-NP-HemkalaNeural",
+}
+
+
+@app.route("/api/tts")
+def tts_proxy():
+    text = (request.args.get("q") or "").strip()[:300]
+    lang = (request.args.get("lang") or "hi").strip()
+    if not text:
+        return jsonify({"error": "Missing text"}), 400
+    voice = EDGE_VOICES.get(lang, "hi-IN-SwaraNeural")
+
+    async def synth():
+        buf = io.BytesIO()
+        comm = edge_tts.Communicate(text, voice)
+        async for chunk in comm.stream():
+            if chunk["type"] == "audio":
+                buf.write(chunk["data"])
+        return buf.getvalue()
+
+    audio_bytes = asyncio.run(synth())
+    return Response(
+        audio_bytes,
+        mimetype="audio/mpeg",
+        headers={"Cache-Control": "public, max-age=86400"},
+    )
 
 
 @app.route("/api/auth/request-otp", methods=["POST"])
