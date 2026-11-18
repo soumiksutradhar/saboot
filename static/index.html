@@ -1419,8 +1419,7 @@ function speakCloudTTS(text,lang,rate,words,onProgress,onDone){
     if(voiceState.aborted)return;
     if(ci>=chunks.length){stopVoice();onDone('cloud');return;}
     const q=encodeURIComponent(chunks[ci++]);
-    const audio=new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${tl}&q=${q}`);
-    audio.referrerPolicy='no-referrer';
+    const audio=new Audio(`/api/tts?lang=${encodeURIComponent(lang)}&q=${q}`);
     audio.playbackRate=rate;
     voiceState.audio=audio;
     audio.onended=()=>nextChunk();
