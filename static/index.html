@@ -2263,7 +2263,27 @@ function renderWorkerUI(){
   }
 
   if(tab==='payments'){
-    const own=db.w.tx.filter(x=>['pay','out','topup','fund','refund'].includes(x.k));
+    const shiftItems=[];
+    db.c.forEach(c=>{
+      (c.esc?.days||[]).forEach(d=>{
+        shiftItems.push({
+          ts:d.at||Date.now(),
+          amt:d.amt,
+          title:`${c.terms.id} · ${c.terms.empName||'Employer'}`,
+          sub:`${d.d}${d.note?' · '+d.note:''}`,
+          st:d.st
+        });
+      });
+    });
+    const cashouts=db.w.tx.filter(x=>x.k==='out').map(x=>({
+      ts:new Date(x.ts).getTime()||Date.now(),
+      amt:x.amt,
+      title:l.ui.cashout,
+      sub:x.note||'Bank',
+      st:'out'
+    }));
+    const allItems=[...shiftItems,...cashouts].sort((a,b)=>b.ts-a.ts);
+    const badge=st=>st==='paid'?`<span class="status-tag ok">Approved &amp; Paid</span>`:st==='auto'?`<span class="status-tag ok">Auto-Paid (24h)</span>`:st==='disputed'?`<span class="status-tag bad">Disputed</span>`:st==='refunded'?`<span class="status-tag bad">Refunded</span>`:st==='out'?`<span class="status-tag wait">${l.ui.cashout}</span>`:`<span class="status-tag wait">Pending Approval</span>`;
     return`<div class="pic-banner">
       <div class="pic-scene">${PIC('bank-pay',64)}</div>
       <h1>${l.ui.payments}</h1>
@@ -2276,7 +2296,7 @@ function renderWorkerUI(){
     </div>
     <div class="card">
       <h3 style="margin-top:0">${l.ui.txHist}</h3>
-      ${own.length?own.map(x=>`<div class="drow"><div><strong>${inr(x.amt)}</strong> · ${x.note}<br><small style="color:var(--mute);font-size:0.75rem">${new Date(x.ts).toLocaleDateString()}</small></div><span class="status-tag ${x.k==='pay'||x.k==='topup'||x.k==='refund'?'ok':'wait'}">${x.k==='pay'?'+ ₹':x.k==='out'?l.ui.cashout:x.k}</span></div>`).join(''):`<div style="text-align:center;color:var(--mute)">₹0</div>`}
+      ${allItems.length?allItems.map(x=>`<div class="drow"><div><strong>${inr(x.amt)}</strong> · ${x.title}<br><small style="color:var(--mute);font-size:0.75rem">${x.sub}</small></div>${badge(x.st)}</div>`).join(''):`<div style="text-align:center;color:var(--mute)">₹0</div>`}
     </div>`;
   }
 
