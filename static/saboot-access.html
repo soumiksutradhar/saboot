@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Saboot — Government-Style Voice &amp; Visual Work Agreement Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@500;700;800&family=Noto+Sans+Bengali:wght@500;700&family=Noto+Sans+Devanagari:wght@500;700&family=Noto+Sans+Gujarati:wght@500;700&family=Noto+Sans+Gurmukhi:wght@500;700&family=Noto+Sans+Kannada:wght@500;700&family=Noto+Sans+Malayalam:wght@500;700&family=Noto+Sans+Oriya:wght@500;700&family=Noto+Sans+Tamil:wght@500;700&family=Noto+Sans+Telugu:wght@500;700&family=Noto+Nastaliq+Urdu:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef2f6;
+  --card:#ffffff;
+  --ink:#0b1f3a;
+  --mute:#3b4d66;
+  --line:#9fb0c7;
+  --soft:#e2e8f0;
+  --gov-navy:#0a2e5c;
+  --gov-blue:#14498c;
+  --gov-saffron:#d95300;
+  --gov-saffron-bg:#fff1e6;
+  --gov-green:#0f6b2f;
+  --gov-green-bg:#e3f5e9;
+  --gov-amber:#ffd54f;
+  --bad:#b91c1c;
+  --bad-bg:#fde8e8;
+  --bd:#0a2e5c;
+  --fs:18px;
+  --sans:'Mukta','Noto Sans Devanagari','Noto Sans Bengali','Noto Sans Gujarati','Noto Sans Gurmukhi','Noto Sans Oriya','Noto Sans Tamil','Noto Sans Telugu','Noto Sans Kannada','Noto Sans Malayalam','Noto Nastaliq Urdu',Arial,sans-serif;
+}
+:root[data-contrast="high"]{
+  --bg:#000000;
+  --card:#000000;
+  --ink:#ffffff;
+  --mute:#ffe600;
+  --line:#ffffff;
+  --soft:#1a1a1a;
+  --gov-navy:#000000;
+  --gov-blue:#000000;
+  --gov-saffron:#ffff00;
+  --gov-saffron-bg:#1a1a00;
+  --gov-green:#00ff66;
+  --gov-green-bg:#002611;
+  --gov-amber:#ffff00;
+  --bad:#ff5555;
+  --bad-bg:#2b0000;
+  --bd:#ffff00;
+}
+*{box-sizing:border-box}
+html{font-size:var(--fs)}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font:500 1rem/1.45 var(--sans);
+  -webkit-font-smoothing:antialiased;
+}
+button,input,select{font-family:inherit;font-size:1rem}
+button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{
+  outline:4px solid var(--gov-saffron);
+  outline-offset:2px;
+}
+
+/* Official Government Tricolor Ribbon & Accessibility Strip */
+.tricolor{
+  height:6px;
+  background:linear-gradient(90deg,#ff6b00 0 33.33%,#ffffff 33.33% 66.66%,#138808 66.66% 100%);
+  border-bottom:1px solid #00000022;
+}
+.gov-util{
+  background:#061b38;
+  color:#ffffff;
+  padding:6px 12px;
+  border-bottom:1px solid #284b7a;
+}
+.gov-util-in{
+  max-width:780px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.gov-tag{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:700;
+  font-size:0.85rem;
+  letter-spacing:0.3px;
+}
+.a11y-grp{display:flex;align-items:center;gap:6px}
+.a11y-btn{
+  background:#ffffff;
+  color:#061b38;
+  border:2px solid #ffffff;
+  border-radius:6px;
+  min-width:40px;
+  height:36px;
+  padding:0 8px;
+  font-weight:800;
+  font-size:0.9rem;
+  cursor:pointer;
+}
+.a11y-btn[aria-pressed="true"]{
+  background:#ffd54f;
+  color:#000000;
+  border-color:#ffd54f;
+}
+
+/* Main Header */
+.topbar{
+  background:var(--gov-navy);
+  color:#ffffff;
+  border-bottom:4px solid var(--gov-saffron);
+  padding:12px;
+}
+.topbar-in{
+  max-width:780px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:none;
+  border:2px solid transparent;
+  border-radius:8px;
+  color:#ffffff;
+  padding:4px 6px;
+  cursor:pointer;
+  text-align:left;
+}
+.brand-title{font-size:1.45rem;font-weight:800;line-height:1.1;display:block}
+.brand-sub{font-size:0.8rem;color:#ffd54f;font-weight:700;display:block}
+
+.top-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.lang-pill{
+  background:#ffd54f;
+  color:#0b1f3a;
+  border:2px solid #ffffff;
+  border-radius:8px;
+  min-height:48px;
+  padding:0 14px;
+  font-weight:800;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+}
+
+/* Role Switcher Bar */
+.role-bar{
+  background:var(--card);
+  border-bottom:2px solid var(--bd);
+  padding:10px 12px;
+}
+.role-bar-in{
+  max-width:780px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.role-tab{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  min-height:56px;
+  padding:8px 12px;
+  border:2px solid var(--bd);
+  border-radius:8px;
+  background:var(--soft);
+  color:var(--ink);
+  font-weight:800;
+  font-size:1.05rem;
+  cursor:pointer;
+}
+.role-tab[aria-pressed="true"]{
+  background:var(--gov-navy);
+  color:#ffffff;
+  border-color:var(--gov-navy);
+}
+:root[data-contrast="high"] .role-tab[aria-pressed="true"]{
+  background:#ffff00;
+  color:#000000;
+}
+
+/* Single-Column Main Container */
+.main-wrap{
+  max-width:780px;
+  margin:0 auto;
+  padding:14px 12px 98px;
+}
+
+/* Picture-First Section Banner (Replaces Wordy Headings) */
+.pic-banner{
+  background:var(--card);
+  border:2px solid var(--bd);
+  border-radius:10px;
+  padding:14px;
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.pic-scene{
+  width:72px;
+  height:72px;
+  border-radius:10px;
+  background:var(--soft);
+  border:2px solid var(--bd);
+  display:grid;
+  place-items:center;
+  flex:none;
+}
+.pic-banner h1,.pic-banner h2{
+  margin:0;
+  font-size:1.35rem;
+  font-weight:800;
+  line-height:1.2;
+  flex:1;
+}
+
+/* Cards */
+.card{
+  background:var(--card);
+  border:2px solid var(--bd);
+  border-radius:10px;
+  padding:16px;
+  margin-bottom:16px;
+}
+.card-hd{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding-bottom:12px;
+  margin-bottom:12px;
+  border-bottom:2px solid var(--soft);
+}
+.card-hd h2{
+  margin:0;
+  font-size:1.2rem;
+  font-weight:800;
+  flex:1;
+}
+.badge-pic{
+  width:52px;
+  height:52px;
+  border-radius:8px;
+  background:var(--soft);
+  border:2px solid var(--bd);
+  display:grid;
+  place-items:center;
+  flex:none;
+}
+
+/* Large Accessible Buttons */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  min-height:56px;
+  padding:10px 18px;
+  border:2px solid var(--bd);
+  border-radius:8px;
+  background:var(--gov-navy);
+  color:#ffffff;
+  font-weight:800;
+  font-size:1.05rem;
+  cursor:pointer;
+  text-decoration:none;
+}
+.btn:disabled{opacity:0.4;cursor:not-allowed}
+.btn.speak{background:#ff6b00;color:#000000;border-color:#0b1f3a}
+.btn.green{background:var(--gov-green);color:#ffffff;border-color:#0b1f3a}
+.btn.ghost{background:var(--card);color:var(--ink)}
+.btn.bad{background:var(--bad-bg);color:var(--bad);border-color:var(--bad)}
+.btn.sm{min-height:48px;padding:8px 14px;font-size:0.95rem}
+.btn.full{width:100%}
+
+.speak-sq{
+  width:54px;
+  height:54px;
+  border-radius:8px;
+  border:2px solid #0b1f3a;
+  background:#ff6b00;
+  color:#000000;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  flex:none;
+}
+.speak-sq.speaking{background:#ffd54f;outline:4px solid #0b1f3a}
+
+/* Visual Summary Strip (Pictogram Equation for Illiterate Users) */
+.pic-eq{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  background:var(--soft);
+  border:2px solid var(--bd);
+  border-radius:8px;
+  padding:10px;
+  margin:10px 0;
+}
+.eq-cell{
+  background:var(--card);
+  border:2px solid var(--line);
+  border-radius:8px;
+  padding:8px 4px;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+}
+.eq-cell strong{font-size:1.1rem;font-weight:800;line-height:1.1}
+.eq-cell span{font-size:0.8rem;font-weight:700;color:var(--mute)}
+
+/* Status Badges */
+.status-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 12px;
+  border-radius:6px;
+  font-weight:800;
+  font-size:0.9rem;
+  border:2px solid currentColor;
+}
+.status-tag.ok{background:var(--gov-green-bg);color:var(--gov-green)}
+.status-tag.warn{background:var(--gov-saffron-bg);color:var(--gov-saffron)}
+.status-tag.bad{background:var(--bad-bg);color:var(--bad)}
+.status-tag.wait{background:var(--soft);color:var(--ink)}
+
+/* KPI Visual Boxes */
+.kpis{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:14px;
+}
+.kpi{
+  background:var(--card);
+  border:2px solid var(--bd);
+  border-radius:8px;
+  padding:12px 8px;
+  text-align:center;
+}
+.kpi b{display:block;font-size:1.5rem;font-weight:800;margin-top:4px}
+.kpi span{display:block;font-size:0.85rem;font-weight:700;color:var(--mute)}
+
+/* Work Tiles (Big Picture Cards) */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tile{
+  background:var(--card);
+  border:2px solid var(--bd);
+  border-radius:8px;
+  padding:12px 6px;
+  text-align:center;
+  font-weight:800;
+  color:var(--ink);
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  min-height:104px;
+}
+.tile[aria-pressed="true"]{
+  background:var(--gov-navy);
+  color:#ffffff;
+}
+:root[data-contrast="high"] .tile[aria-pressed="true"]{
+  background:#ffff00;
+  color:#000000;
+}
+
+.seg{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px;
+  margin-bottom:12px;
+}
+.seg button{
+  min-height:52px;
+  border:2px solid var(--bd);
+  border-radius:8px;
+  background:var(--card);
+  color:var(--ink);
+  font-weight:800;
+  cursor:pointer;
+}
+.seg button[aria-pressed="true"]{
+  background:var(--gov-navy);
+  color:#ffffff;
+}
+:root[data-contrast="high"] .seg button[aria-pressed="true"]{
+  background:#ffff00;
+  color:#000000;
+}
+
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.chips button{
+  min-height:48px;
+  padding:0 16px;
+  border:2px solid var(--bd);
+  border-radius:8px;
+  background:var(--card);
+  color:var(--ink);
+  font-weight:800;
+  cursor:pointer;
+}
+.chips button[aria-pressed="true"]{
+  background:var(--gov-navy);
+  color:#ffffff;
+}
+:root[data-contrast="high"] .chips button[aria-pressed="true"]{
+  background:#ffff00;
+  color:#000000;
+}
+
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:10px 0}
+.days button{
+  min-height:48px;
+  border-radius:8px;
+  border:2px solid var(--bd);
+  background:var(--card);
+  color:var(--ink);
+  font-weight:800;
+  cursor:pointer;
+}
+.days button[aria-pressed="true"]{
+  background:var(--gov-green);
+  color:#ffffff;
+}
+
+.inp{
+  width:100%;
+  min-height:52px;
+  border:2px solid var(--bd);
+  background:var(--card);
+  color:var(--ink);
+  border-radius:8px;
+  padding:10px 12px;
+  font-weight:700;
+}
+.amt-big{font-size:2.6rem;font-weight:800;text-align:center;margin:8px 0}
+
+/* Karaoke Box */
+.karaoke{
+  background:var(--soft);
+  border:2px solid var(--bd);
+  border-radius:8px;
+  padding:12px;
+  margin:12px 0;
+  font-size:1.1rem;
+  line-height:1.65;
+  font-weight:700;
+}
+.kword{display:inline-block;padding:2px 4px;border-radius:4px}
+.kword.on{background:#ffd54f;color:#000000}
+
+/* Contract Ticket */
+.tk{
+  background:var(--card);
+  border:3px solid var(--bd);
+  border-radius:10px;
+  margin-bottom:16px;
+  overflow:hidden;
+}
+.tkh{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding:12px 14px;
+  background:var(--gov-navy);
+  color:#ffffff;
+  flex-wrap:wrap;
+}
+.tkh .tkt{font-size:1.2rem;font-weight:800}
+.tkh .tks{font-size:0.9rem;color:#ffd54f;font-weight:700}
+.tkb{padding:14px}
+.qr-box{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  background:#ffffff;
+  color:#000000;
+  border:2px solid #0b1f3a;
+  border-radius:8px;
+  padding:6px;
+  cursor:pointer;
+}
+.qr-box svg{display:block;width:96px;height:96px}
+.qr-cap{font-size:0.75rem;font-weight:800;color:#0b1f3a}
+
+.dys{display:flex;gap:4px;justify-content:center}
+.dys i{
+  width:22px;height:22px;border-radius:4px;
+  display:grid;place-items:center;
+  font-size:0.75rem;font-weight:800;font-style:normal;
+  background:var(--soft);color:var(--mute);border:1px solid var(--line);
+}
+.dys i.on{background:var(--gov-green);color:#ffffff;border-color:var(--gov-green)}
+
+.shape-match{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--soft);
+  border:2px solid var(--bd);
+  border-radius:8px;
+  padding:6px 10px;
+  font-weight:800;
+}
+
+.esc-box{
+  margin:12px 0 0;
+  border:2px solid var(--gov-green);
+  border-radius:8px;
+  padding:12px;
+  background:var(--gov-green-bg);
+}
+.drow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  padding:10px 0;
+  border-top:2px solid var(--line);
+  flex-wrap:wrap;
+}
+
+/* Star Trust Display */
+.stars-row{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin:10px 0;
+}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}
+.steps span{
+  text-align:center;font-weight:800;font-size:0.85rem;
+  padding:8px 4px;border-radius:6px;
+  background:var(--soft);color:var(--mute);border:2px solid var(--line);
+}
+.steps .on{background:var(--gov-navy);color:#ffffff;border-color:var(--gov-navy)}
+
+/* Bottom Government Navigation Bar */
+.bnav{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  z-index:25;
+  background:var(--card);
+  border-top:3px solid var(--bd);
+  padding:6px 8px calc(env(safe-area-inset-bottom,0px) + 6px);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:6px;
+}
+.bnav button{
+  border:2px solid transparent;
+  background:none;
+  color:var(--ink);
+  font-weight:800;
+  font-size:0.85rem;
+  min-height:62px;
+  padding:4px 2px;
+  border-radius:8px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  cursor:pointer;
+  position:relative;
+}
+.bnav button[aria-current="true"]{
+  background:var(--gov-navy);
+  color:#ffffff;
+  border-color:var(--gov-navy);
+}
+:root[data-contrast="high"] .bnav button[aria-current="true"]{
+  background:#ffff00;
+  color:#000000;
+}
+.bnav .nbadge{
+  position:absolute;
+  top:2px;right:12%;
+  background:#d95300;
+  color:#ffffff;
+  font-size:0.75rem;
+  font-weight:800;
+  padding:1px 6px;
+  border-radius:99px;
+}
+
+/* Modal & Onboarding */
+.modal{
+  position:fixed;inset:0;
+  background:#000000b8;
+  display:grid;place-items:center;
+  padding:12px;z-index:40;
+}
+.modal .card{max-width:660px;width:100%;max-height:88vh;overflow:auto;margin:0}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin:12px 0}
+.lbtn{
+  border:2px solid var(--bd);
+  background:var(--card);
+  color:var(--ink);
+  border-radius:8px;
+  padding:10px;
+  text-align:left;
+  cursor:pointer;
+  min-height:58px;
+}
+.lbtn[aria-pressed="true"]{background:var(--gov-navy);color:#ffffff}
+.lbtn strong{display:block;font-size:1.1rem}
+.lbtn small{font-size:0.8rem;opacity:0.85}
+
+.onboard{display:grid;grid-template-columns:1fr;gap:16px}
+.rcard{
+  background:var(--card);
+  border:3px solid var(--bd);
+  border-radius:10px;
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.step-strip{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  background:var(--soft);
+  padding:10px;
+  border-radius:8px;
+  border:2px solid var(--line);
+}
+.step-item{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:8px 4px;
+  text-align:center;
+  font-weight:800;
+  font-size:0.85rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+}
+
+.toast{
+  position:fixed;left:50%;bottom:88px;transform:translateX(-50%);
+  background:#061b38;color:#ffffff;border:3px solid #ffd54f;
+  padding:12px 18px;border-radius:8px;font-weight:800;
+  z-index:50;max-width:92vw;text-align:center;
+}
+.hold{position:relative;overflow:hidden;user-select:none;touch-action:none}
+.hold:after{content:"";position:absolute;left:0;bottom:0;height:6px;width:0;background:#ffd54f}
+.hold.go:after{width:100%;transition:width 1.2s linear}
+
+@media (max-width:540px){
+  .pic-eq{grid-template-columns:repeat(2,1fr)}
+  .grid3{grid-template-columns:repeat(2,1fr)}
+  .kpis{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Universal Pictogram & Symbol Library (Zero Emojis, High-Clarity Multi-Tone Icons) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <!-- Small UI Icons -->
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8M5 10v10h14V10M10 20v-6h4v6"/></symbol>
+  <symbol id="i-build" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h18v2H3zM5 18a7 7 0 0114 0M10 8V5h4v3"/></symbol>
+  <symbol id="i-scissors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.1 8.1L20 20M8.1 15.9L20 4"/></symbol>
+  <symbol id="i-sprout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9M12 12C12 8 9 6 5 6c0 4 3 6 7 6zM12 14c0-3.5 2.5-5.5 6-5.5 0 3.5-2.5 5.5-6 5.5z"/></symbol>
+  <symbol id="i-wheel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/><path d="M3 12h7M14 12h7M12 14v7"/></symbol>
+  <symbol id="i-face" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14c1 1.5 2.4 2 4 2s3-.5 4-2M9 9.5h.01M15 9.5h.01"/></symbol>
+  <symbol id="i-speaker" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9zM16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0014 0M12 17v4M8 21h8"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5M4 9h10a6 6 0 010 12h-3"/></symbol>
+  <symbol id="i-rupee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5h10M7 9h10M7 5c6 0 6 8 0 8H6l8 7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></symbol>
+  <symbol id="i-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M8.5 13.5L7 21l5-3 5 3-1.5-7.5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2.5"/><circle cx="17" cy="6" r="2.5"/><circle cx="17" cy="18" r="2.5"/><path d="M8.2 10.8l6.6-3.6M8.2 13.2l6.6 3.6"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6zM14 3v4h4M9 13h6M9 17h6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol>
+  <symbol id="i-brief" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2M3 13h18"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2zM12 10v5M12 18h.01"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M16 13.5h2M6 7l9-4v4"/></symbol>
+  <symbol id="i-thumb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 00-6 6v4a6 6 0 0012 0V9a6 6 0 00-6-6z"/><path d="M9 10a3 3 0 016 0v3a3 3 0 01-6 0"/><path d="M12 11v3"/></symbol>
+  <symbol id="i-bank" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-6 9 6H3zM5 9v9M10 9v9M14 9v9M19 9v9M2 18h20v3H2z"/></symbol>
+
+  <!-- Large Pictorial Scenes for Illiterate / Low-Literacy Users -->
+  <symbol id="pic-worker" viewBox="0 0 64 64">
+    <rect x="4" y="4" width="56" height="56" rx="10" fill="#fff1e6" stroke="#0a2e5c" stroke-width="3"/>
+    <path d="M20 22a12 12 0 0124 0H20z" fill="#ff6b00" stroke="#0a2e5c" stroke-width="2.5"/>
+    <rect x="17" y="21" width="30" height="4" rx="2" fill="#0a2e5c"/>
+    <circle cx="32" cy="31" r="7" fill="#ffd54f" stroke="#0a2e5c" stroke-width="2.5"/>
+    <path d="M18 54c0-8 6-13 14-13s14 5 14 13" fill="#0f6b2f" stroke="#0a2e5c" stroke-width="2.5"/>
+    <circle cx="49" cy="46" r="9" fill="#ffd54f" stroke="#0a2e5c" stroke-width="2.5"/>
+    <text x="49" y="50" text-anchor="middle" font-size="12" font-weight="900" fill="#0a2e5c">₹</text>
+  </symbol>
+
+  <symbol id="pic-employer" viewBox="0 0 64 64">
+    <rect x="4" y="4" width="56" height="56" rx="10" fill="#e3f5e9" stroke="#0a2e5c" stroke-width="3"/>
+    <rect x="14" y="16" width="26" height="38" rx="3" fill="#ffffff" stroke="#0a2e5c" stroke-width="2.5"/>
+    <path d="M20 25h14M20 33h14M20 41h9" stroke="#0a2e5c" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="34" y="34" width="20" height="18" rx="4" fill="#0f6b2f" stroke="#0a2e5c" stroke-width="2.5"/>
+    <path d="M39 34v-4a5 5 0 0110 0v4" fill="none" stroke="#0a2e5c" stroke-width="2.5"/>
+    <text x="44" y="47" text-anchor="middle" font-size="12" font-weight="900" fill="#ffffff">₹</text>
+  </symbol>
+
+  <symbol id="pic-vault" viewBox="0 0 64 64">
+    <rect x="4" y="4" width="56" height="56" rx="10" fill="#e3f5e9" stroke="#0a2e5c" stroke-width="3"/>
+    <rect x="16" y="28" width="32" height="24" rx="4" fill="#0f6b2f" stroke="#0a2e5c" stroke-width="2.5"/>
+    <path d="M23 28v-6a9 9 0 0118 0v6" fill="none" stroke="#0a2e5c" stroke-width="3"/>
+    <text x="32" y="45" text-anchor="middle" font-size="16" font-weight="900" fill="#ffd54f">₹</text>
+  </symbol>
+
+  <symbol id="pic-listen-sign" viewBox="0 0 64 64">
+    <rect x="4" y="4" width="56" height="56" rx="10" fill="#fff1e6" stroke="#0a2e5c" stroke-width="3"/>
+    <path d="M12 25v14h7l9 8V17l-9 8z" fill="#ff6b00" stroke="#0a2e5c" stroke-width="2.5"/>
+    <path d="M33 25a9 9 0 010 14M37 20a15 15 0 010 24" fill="none" stroke="#0a2e5c" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="48" cy="46" r="10" fill="#0f6b2f" stroke="#0a2e5c" stroke-width="2.5"/>
+    <path d="M43 46l3 3 7-7" fill="none" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="pic-bank-pay" viewBox="0 0 64 64">
+    <rect x="4" y="4" width="56" height="56" rx="10" fill="#e2e8f0" stroke="#0a2e5c" stroke-width="3"/>
+    <path d="M12 24l20-12 20 12H12z" fill="#0a2e5c"/>
+    <rect x="16" y="26" width="5" height="18" fill="#0a2e5c"/>
+    <rect x="29.5" y="26" width="5" height="18" fill="#0a2e5c"/>
+    <rect x="43" y="26" width="5" height="18" fill="#0a2e5c"/>
+    <rect x="11" y="45" width="42" height="6" fill="#0f6b2f"/>
+  </symbol>
+</defs></svg>
+
+<!-- Official Tricolor Bar -->
+<div class="tricolor" aria-hidden="true"></div>
+
+<!-- Accessibility & Portal Utility Bar -->
+<div class="gov-util">
+  <div class="gov-util-in">
+    <div class="gov-tag">
+      <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="#ffd54f" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="#ffd54f"/><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1" stroke="#ffd54f" stroke-width="1.3"/></svg>
+      <span>SABOOT · PUBLIC WAGE PORTAL</span>
+    </div>
+    <div class="a11y-grp" role="group" aria-label="Display Settings">
+      <button class="a11y-btn" onclick="setFontScale(-2)" aria-label="Decrease text size">A-</button>
+      <button class="a11y-btn" onclick="setFontScale(0)" aria-label="Default text size">A</button>
+      <button class="a11y-btn" onclick="setFontScale(3)" aria-label="Increase text size">A+</button>
+      <button class="a11y-btn" id="hc-btn" aria-pressed="false" onclick="toggleContrast()" aria-label="High contrast mode">B/W</button>
+    </div>
+  </div>
+</div>
+
+<!-- Main Portal Header -->
+<header class="topbar" id="topbar"></header>
+
+<!-- Role Switcher -->
+<div class="role-bar" id="rolebar"></div>
+
+<!-- Main Single-Column Workspace -->
+<main class="main-wrap" id="app"></main>
+
+<!-- Bottom Navigation Bar -->
+<nav class="bnav" id="bnav" aria-label="Primary Navigation"></nav>
+
+<script>
+const $=s=>document.querySelector(s);
+const I=(n,sz=22)=>`<svg width="${sz}" height="${sz}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+const PIC=(n,sz=60)=>`<svg width="${sz}" height="${sz}" aria-hidden="true"><use href="#pic-${n}"/></svg>`;
+
+const EMBLEM=`<svg width="42" height="42" viewBox="0 0 42 42" aria-hidden="true">
+  <circle cx="21" cy="21" r="19" fill="#ffffff" stroke="#ffd54f" stroke-width="2.5"/>
+  <circle cx="21" cy="21" r="13" fill="none" stroke="#0a2e5c" stroke-width="2.2"/>
+  <path d="M15 21.5l4 4 8-9" fill="none" stroke="#0f6b2f" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`;
+
+/* ==========================================================================
+   23 LANGUAGES (ALL 22 SCHEDULED INDIAN LANGUAGES + ENGLISH)
+   ========================================================================== */
+const LANG_RAW={
+en:{n:'English',e:'English',c:'en-IN',w:['Home','Building','Tailor','Farm','Driver','Childcare'],u:['1 Day','1 Month','1 Piece'],q:['Daily','Weekly','Month End'],ui:{emp:'Employer',wrk:'Worker',listen:'Listen',sign:'Thumb Sign',worked:'Worked Today',approve:'Pay Now',offers:'Offers',wallet:'Money',trust:'Stars',roster:'Workers',create:'New Work',cancel:'Cancel',verify:'Check',cashout:'Send to Bank',lang:'Language'},t:'Work: {w}. Pay: {a} rupees for {p}. {d} days in week. Paid {q}. Both must agree. Worker can cancel in 24 hours.'},
+hi:{n:'हिन्दी',e:'Hindi',c:'hi-IN',w:['घर काम','निर्माण','सिलाई','खेती','ड्राइवर','बच्चों की देखभाल'],u:['1 दिन','1 महीना','1 पीस'],q:['रोज़','हर हफ़्ते','महीने के अंत में'],ui:{emp:'मालिक',wrk:'मज़दूर',listen:'सुनें',sign:'अंगूठा लगाएं',worked:'आज काम किया',approve:'पैसे दें',offers:'नया काम',wallet:'पैसे',trust:'स्टार',roster:'मज़दूर सूची',create:'नया काम दें',cancel:'रद्द करें',verify:'जांचें',cashout:'बैंक में भेजें',lang:'भाषा'},t:'काम: {w}। मजदूरी: {a} रुपये {p}। सप्ताह में {d} दिन। भुगतान {q}। दोनों की सहमति ज़रूरी है। मज़दूर 24 घंटे में रद्द कर सकता है।'},
+od:{n:'ଓଡ଼ିଆ',e:'Odia',c:'or-IN',w:['ଘର କାମ','ନିର୍ମାଣ','ସିଲେଇ','ଚାଷ','ଡ୍ରାଇଭର','ଶିଶୁ ଯତ୍ନ'],u:['୧ ଦିନ','୧ ମାସ','୧ ପିସ୍'],q:['ପ୍ରତିଦିନ','ପ୍ରତି ସପ୍ତାହ','ମାସ ଶେଷରେ'],ui:{emp:'ମାଲିକ',wrk:'ଶ୍ରମିକ',listen:'ଶୁଣନ୍ତୁ',sign:'ଟିପ ଚିହ୍ନ',worked:'ଆଜି କାମ କଲି',approve:'ଟଙ୍କା ଦିଅନ୍ତୁ',offers:'ନୂଆ କାମ',wallet:'ଟଙ୍କା',trust:'ତାରା',roster:'ଶ୍ରମିକ',create:'ନୂଆ କାମ',cancel:'ବାତିଲ',verify:'ଯାଞ୍ଚ',cashout:'ବ୍ୟାଙ୍କକୁ ପଠାନ୍ତୁ',lang:'ଭାଷା'},t:'କାମ: {w}। ମଜୁରୀ: {a} ଟଙ୍କା {p}। ସପ୍ତାହରେ {d} ଦିନ। ଦେୟ {q}। ଦୁଇ ପକ୍ଷ ରାଜି ହେବା ଜରୁରୀ। ଶ୍ରମିକ 24 ଘଣ୍ଟାରେ ବାତିଲ କରିପାରିବେ।'},
+bn:{n:'বাংলা',e:'Bengali',c:'bn-IN',w:['ঘরের কাজ','নির্মাণ','সেলাই','চাষ','ড্রাইভার','শিশু যত্ন'],u:['১ দিন','১ মাস','১ পিস'],q:['প্রতিদিন','প্রতি সপ্তাহে','মাসের শেষে'],ui:{emp:'মালিক',wrk:'শ্রমিক',listen:'শুনুন',sign:'টিপসই দিন',worked:'আজ কাজ করেছি',approve:'টাকা দিন',offers:'নতুন কাজ',wallet:'টাকা',trust:'তারা',roster:'শ্রমিক',create:'নতুন কাজ',cancel:'বাতিল',verify:'যাচাই',cashout:'ব্যাংকে পাঠান',lang:'ভাষা'},t:'কাজ: {w}। মজুরি: {a} টাকা {p}। সপ্তাহে {d} দিন। মজুরি {q}। দুই পক্ষের সম্মতি লাগবে। শ্রমিক ২৪ ঘণ্টায় বাতিল করতে পারবেন।'},
+mr:{n:'मराठी',e:'Marathi',c:'mr-IN',w:['घरकाम','बांधकाम','शिवणकाम','शेती','ड्रायव्हर','बालसंगोपन'],u:['१ दिवस','१ महिना','१ नग'],q:['रोज','दर आठवड्याला','महिन्याच्या शेवटी'],ui:{emp:'मालक',wrk:'कामगार',listen:'ऐका',sign:'अंगठा लावा',worked:'आज काम केले',approve:'पगार द्या',offers:'नवीन काम',wallet:'पैसे',trust:'तारे',roster:'कामगार',create:'नवीन काम',cancel:'रद्द करा',verify:'तपासा',cashout:'बँकेत पाठवा',lang:'भाषा'},t:'काम: {w}. मजुरी: {a} रुपये {p}. आठवड्यात {d} दिवस. पगार {q}. दोघांची संमती आवश्यक आहे. कामगार २४ तासांत रद्द करू शकतो.'},
+gu:{n:'ગુજરાતી',e:'Gujarati',c:'gu-IN',w:['ઘરકામ','બાંધકામ','સિલાઈ','ખેતી','ડ્રાઇવર','બાળસંભાળ'],u:['૧ દિવસ','૧ મહિનો','૧ નંગ'],q:['રોજ','દર અઠવાડિયે','મહિનાના અંતે'],ui:{emp:'માલિક',wrk:'કામદાર',listen:'સાંભળો',sign:'અંગૂઠો આપો',worked:'આજે કામ કર્યું',approve:'પૈસા આપો',offers:'નવું કામ',wallet:'પૈસા',trust:'સ્ટાર',roster:'કામદાર',create:'નવું કામ',cancel:'રદ કરો',verify:'તપાસો',cashout:'બેંકમાં મોકલો',lang:'ભાષા'},t:'કામ: {w}. મજૂરી: {a} રૂપિયા {p}. અઠવાડિયામાં {d} દિવસ. ચુકવણી {q}. બંનેની સંમતિ જરૂરી છે. કામદાર ૨૪ કલાકમાં રદ કરી શકે છે.'},
+ta:{n:'தமிழ்',e:'Tamil',c:'ta-IN',w:['வீட்டு வேலை','கட்டுமானம்','தையல்','விவசாயம்','ஓட்டுநர்','குழந்தை பராமரிப்பு'],u:['1 நாள்','1 மாதம்','1 துண்டு'],q:['தினமும்','வாரந்தோறும்','மாத இறுதியில்'],ui:{emp:'முதலாளி',wrk:'தொழிலாளி',listen:'கேளுங்கள்',sign:'கைரேகை',worked:'இன்று வேலை செய்தேன்',approve:'பணம் கொடு',offers:'புதிய வேலை',wallet:'பணம்',trust:'நட்சத்திரம்',roster:'தொழிலாளர்',create:'புதிய வேலை',cancel:'ரத்து',verify:'சரிபார்',cashout:'வங்கிக்கு அனுப்பு',lang:'மொழி'},t:'வேலை: {w}. கூலி: {a} ரூபாய் {p}. வாரத்தில் {d} நாட்கள். சம்பளம் {q}. இருவரும் ஒப்புக்கொள்ள வேண்டும். தொழிலாளர் 24 மணி நேரத்தில் ரத்து செய்யலாம்.'},
+te:{n:'తెలుగు',e:'Telugu',c:'te-IN',w:['ఇంటి పని','నిర్మాణం','కుట్టు పని','వ్యవసాయం','డ్రైవర్','పిల్లల సంరక్షణ'],u:['1 రోజు','1 నెల','1 ముక్క'],q:['ప్రతిరోజూ','ప్రతి వారం','నెలాఖరున'],ui:{emp:'యజమాని',wrk:'కార్మికుడు',listen:'వినండి',sign:'వేలిముద్ర',worked:'ఈరోజు పని చేశాను',approve:'డబ్బు చెల్లించు',offers:'కొత్త పని',wallet:'డబ్బు',trust:'నక్షత్రాలు',roster:'కార్మికులు',create:'కొత్త పని',cancel:'రద్దు',verify:'తనిఖీ',cashout:'బ్యాంకుకు పంపు',lang:'భాష'},t:'పని: {w}. కూలీ: {a} రూపాయలు {p}. వారానికి {d} రోజులు. చెల్లింపు {q}. ఇద్దరూ అంగీకరించాలి. కార్మికుడు 24 గంటల్లో రద్దు చేయవచ్చు.'},
+kn:{n:'ಕನ್ನಡ',e:'Kannada',c:'kn-IN',w:['ಮನೆಕೆಲಸ','ನಿರ್ಮಾಣ','ಹೊಲಿಗೆ','ಕೃಷಿ','ಚಾಲಕ','ಮಕ್ಕಳ ಆರೈಕೆ'],u:['1 ದಿನ','1 ತಿಂಗಳು','1 ತುಂಡು'],q:['ಪ್ರತಿದಿನ','ಪ್ರತಿ ವಾರ','ತಿಂಗಳ ಕೊನೆಯಲ್ಲಿ'],ui:{emp:'ಮಾಲೀಕರು',wrk:'ಕಾರ್ಮಿಕ',listen:'ಕೇಳಿ',sign:'ಹೆಬ್ಬೆಟ್ಟು',worked:'ಇಂದು ಕೆಲಸ ಮಾಡಿದೆ',approve:'ಹಣ ನೀಡಿ',offers:'ಹೊಸ ಕೆಲಸ',wallet:'ಹಣ',trust:'ನಕ್ಷತ್ರ',roster:'ಕಾರ್ಮಿಕರು',create:'ಹೊಸ ಕೆಲಸ',cancel:'ರದ್ದು',verify:'ಪರಿಶೀಲಿಸಿ',cashout:'ಬ್ಯಾಂಕಿಗೆ ಕಳುಹಿಸಿ',lang:'ಭಾಷೆ'},t:'ಕೆಲಸ: {w}. ಕೂಲಿ: {a} ರೂಪಾಯಿ {p}. ವಾರಕ್ಕೆ {d} ದಿನ. ಪಾವತಿ {q}. ಇಬ್ಬರೂ ಒಪ್ಪಬೇಕು. ಕಾರ್ಮಿಕರು 24 ಗಂಟೆಗಳಲ್ಲಿ ರದ್ದುಮಾಡಬಹುದು.'},
+ml:{n:'മലയാളം',e:'Malayalam',c:'ml-IN',w:['വീട്ടുജോലി','നിർമ്മാണം','തയ്യൽ','കൃഷി','ഡ്രൈവർ','കുട്ടികളുടെ പരിചരണം'],u:['1 ദിവസം','1 മാസം','1 എണ്ണം'],q:['എല്ലാ ദിവസവും','എല്ലാ ആഴ്ചയും','മാസാവസാനം'],ui:{emp:'തൊഴിലുടമ',wrk:'തൊഴിലാളി',listen:'കേൾക്കുക',sign:'വിരലടയാളം',worked:'ഇന്ന് ജോലി ചെയ്തു',approve:'പണം നൽകുക',offers:'പുതിയ ജോലി',wallet:'പണം',trust:'നക്ഷത്രം',roster:'തൊഴിലാളികൾ',create:'പുതിയ ജോലി',cancel:'റദ്ദാക്കുക',verify:'പരിശോധിക്കുക',cashout:'ബാങ്കിലേക്ക് അയക്കുക',lang:'ഭാഷ'},t:'ജോലി: {w}. കൂലി: {a} രൂപ {p}. ആഴ്ചയിൽ {d} ദിവസം. ശമ്പളം {q}. ഇരുവരും സമ്മതിക്കണം. തൊഴിലാളിക്ക് 24 മണിക്കൂറിനുള്ളിൽ റദ്ദാക്കാം.'},
+pa:{n:'ਪੰਜਾਬੀ',e:'Punjabi',c:'pa-IN',w:['ਘਰੇਲੂ ਕੰਮ','ਉਸਾਰੀ','ਸਿਲਾਈ','ਖੇਤੀ','ਡਰਾਈਵਰ','ਬੱਚਿਆਂ ਦੀ ਦੇਖਭਾਲ'],u:['1 ਦਿਨ','1 ਮਹੀਨਾ','1 ਪੀਸ'],q:['ਰੋਜ਼','ਹਰ ਹਫ਼ਤੇ','ਮਹੀਨੇ ਦੇ ਅੰਤ ਵਿੱਚ'],ui:{emp:'ਮਾਲਕ',wrk:'ਮਜ਼ਦੂਰ',listen:'ਸੁਣੋ',sign:'ਅੰਗੂਠਾ ਲਗਾਓ',worked:'ਅੱਜ ਕੰਮ ਕੀਤਾ',approve:'ਪੈਸੇ ਦਿਓ',offers:'ਨਵਾਂ ਕੰਮ',wallet:'ਪੈਸੇ',trust:'ਤਾਰੇ',roster:'ਮਜ਼ਦੂਰ',create:'ਨਵਾਂ ਕੰਮ',cancel:'ਰੱਦ ਕਰੋ',verify:'ਜਾਂਚੋ',cashout:'ਬੈਂਕ ਭੇਜੋ',lang:'ਭਾਸ਼ਾ'},t:'ਕੰਮ: {w}। ਮਜ਼ਦੂਰੀ: {a} ਰੁਪਏ {p}। ਹਫ਼ਤੇ ਵਿੱਚ {d} ਦਿਨ। ਭੁਗਤਾਨ {q}। ਦੋਵਾਂ ਦੀ ਸਹਿਮਤੀ ਜ਼ਰੂਰੀ ਹੈ। ਮਜ਼ਦੂਰ 24 ਘੰਟਿਆਂ ਵਿੱਚ ਰੱਦ ਕਰ ਸਕਦਾ ਹੈ।'},
+as:{n:'অসমীয়া',e:'Assamese',c:'as-IN',w:['ঘৰুৱা কাম','নিৰ্মাণ','চিলাই','খেতি','ড্ৰাইভাৰ','শিশুৰ যত্ন'],u:['১ দিন','১ মাহ','১ টুকুৰা'],q:['প্ৰতিদিনে','প্ৰতি সপ্তাহে','মাহৰ শেষত'],ui:{emp:'মালিক',wrk:'শ্ৰমিক',listen:'শুনক',sign:'টিপ চহী',worked:'আজি কাম কৰিলোঁ',approve:'টকা দিয়ক',offers:'নতুন কাম',wallet:'টকা',trust:'তৰা',roster:'শ্ৰমিক',create:'নতুন কাম',cancel:'বাতিল',verify:'পৰীক্ষা',cashout:'বেংকলৈ পঠিয়াওক',lang:'ভাষা'},t:'কাম: {w}। মজুৰি: {a} টকা {p}। সপ্তাহত {d} দিন। পৰিশোধ {q}। দুয়োপক্ষৰ সন্মতি লাগিব। শ্ৰমিকে ২৪ ঘণ্টাত বাতিল কৰিব পাৰিব।'},
+ur:{n:'اردو',e:'Urdu',c:'ur-IN',rtl:true,w:['گھریلو کام','تعمیرات','سلائی','کھیتی','ڈرائیور','بچوں کی دیکھ بھال'],u:['1 دن','1 مہینہ','1 پیس'],q:['روزانہ','ہر ہفتے','مہینے کے آخر میں'],ui:{emp:'مالک',wrk:'مزدور',listen:'سنیں',sign:'انگوٹھا لگائیں',worked:'آج کام کیا',approve:'پیسے دیں',offers:'نیا کام',wallet:'پیسے',trust:'ستارے',roster:'مزدور',create:'نیا کام',cancel:'منسوخ',verify:'جانچیں',cashout:'بینک بھیجیں',lang:'زبان'},t:'کام: {w}۔ اجرت: {a} روپے {p}۔ ہفتے میں {d} دن۔ ادائیگی {q}۔ دونوں کی رضامندی ضروری ہے۔ مزدور 24 گھنٹے میں منسوخ کر سکتا ہے۔'},
+ne:{n:'नेपाली',e:'Nepali',c:'ne-NP',w:['घरायसी काम','निर्माण','सिलाइ','खेती','चालक','बाल हेरचाह'],u:['१ दिन','१ महिना','१ पिस'],q:['दैनिक','साप्ताहिक','महिनाको अन्त्यमा'],ui:{emp:'मालिक',wrk:'श्रमिक',listen:'सुन्नुहोस्',sign:'औंठाछाप',worked:'आज काम गरें',approve:'पैसा दिनुहोस्',offers:'नयाँ काम',wallet:'पैसा',trust:'तारा',roster:'श्रमिक',create:'नयाँ काम',cancel:'रद्द',verify:'जाँच',cashout:'बैंक पठाउनुहोस्',lang:'भाषा'},t:'काम: {w}। ज्याला: {a} रुपैयाँ {p}। हप्तामा {d} दिन। भुक्तानी {q}। दुवैको सहमति आवश्यक छ। श्रमिकले २४ घण्टामा रद्द गर्न सक्छ।'},
+kok:{n:'कोंकणी',e:'Konkani',c:'kok-IN',w:['घरकाम','बांदकाम','शिवणकाम','शेतकाम','ड्रायव्हर','भुरग्यांची काळजी'],u:['१ दीस','१ म्हयनो','१ नग'],q:['दर दिसा','दर सप्तकाक','म्हयन्याचे अखेरेक'],ui:{emp:'धनी',wrk:'कामगार',listen:'आयकात',sign:'आंगठो लायात',worked:'आयज काम केलें',approve:'पयशे दियात',offers:'नवें काम',wallet:'पयशे',trust:'नखेत्रां',roster:'कामगार',create:'नवें काम',cancel:'रद्द',verify:'तपासात',cashout:'बँकेत धाडात',lang:'भास'},t:'काम: {w}. मजुरी: {a} रुपया {p}. सप्तकांत {d} दीस. पगार {q}. दोगांची संमती गरजेची. कामगार २४ वरांत रद्द करूंक शकता.'},
+mai:{n:'मैथिली',e:'Maithili',c:'mai-IN',w:['घरक काज','निर्माण','सिलाई','खेती','ड्राइवर','नेना देखभाल'],u:['१ दिन','१ मास','१ पीस'],q:['रोज','हर सप्ताह','मासक अंत मे'],ui:{emp:'मालिक',wrk:'मजदूर',listen:'सुनू',sign:'अंगूठा लगाउ',worked:'आइ काज केलहुँ',approve:'पैसा दिअ',offers:'नव काज',wallet:'पैसा',trust:'तारा',roster:'मजदूर',create:'नव काज',cancel:'रद्द',verify:'जांचू',cashout:'बैंक पठाउ',lang:'भाषा'},t:'काज: {w}। मजदूरी: {a} टाका {p}। सप्ताह मे {d} दिन। भुगतान {q}। दुनू गोटेक सहमति जरूरी अछि। मजदूर २४ घंटा मे रद्द क सकैत छथि।'},
+sa:{n:'संस्कृतम्',e:'Sanskrit',c:'sa-IN',w:['गृहकार्यम्','निर्माणम्','सीवनम्','कृषिः','चालकः','शिशुपालनम्'],u:['एकदिनम्','एकमासम्','एकम्'],q:['प्रतिदिनम्','प्रतिसप्ताहम्','मासान्ते'],ui:{emp:'नियोजकः',wrk:'कर्मकरः',listen:'शृणुत',sign:'अङ्गुष्ठमुद्रा',worked:'अद्य कार्यं कृतम्',approve:'धनं ददातु',offers:'नवकार्यम्',wallet:'धनम्',trust:'नक्षत्राणि',roster:'कर्मकराः',create:'नवकार्यम्',cancel:'निरसनम्',verify:'परीक्षा',cashout:'कोषं प्रेषयतु',lang:'भाषा'},t:'कार्यम्: {w}। वेतनम्: {a} रूप्यकाणि {p}। सप्ताहे {d} दिनानि। दानम् {q}। उभयोः सम्मतिः आवश्यकी। कर्मकरः चतुर्विंशतिहोरासु निरसितुं शक्नोति।'},
+sd:{n:'سنڌي',e:'Sindhi',c:'sd-IN',rtl:true,w:['گھر جو ڪم','اڏاوت','سلائي','زراعت','ڊرائيور','ٻارن جي سنڀال'],u:['1 ڏينهن','1 مهينو','1 پيس'],q:['روزانو','هر هفتي','مهيني جي آخر ۾'],ui:{emp:'مالڪ',wrk:'مزدور',listen:'ٻڌو',sign:'آڱوٺو لڳايو',worked:'اڄ ڪم ڪيو',approve:'پئسا ڏيو',offers:'نئون ڪم',wallet:'پئسا',trust:'تارا',roster:'مزدور',create:'نئون ڪم',cancel:'رد ڪريو',verify:'جاچيو',cashout:'بئنڪ موڪليو',lang:'ٻولي'},t:'ڪم: {w}. اجورو: {a} رپيا {p}. هفتي ۾ {d} ڏينهن. ادائگي {q}. ٻنهي جي رضامندي ضروري آهي. مزدور 24 ڪلاڪن ۾ منسوخ ڪري سگهي ٿو.'},
+ks:{n:'कॉशुर',e:'Kashmiri',c:'ks-IN',w:['गरुक कأم','तामीर','सिलाई','काश्तकारी','ड्राइवर','बचन हुंद ख्याल'],u:['१ दोह','१ रेत','१ पीस'],q:['हर दोह','हर हफ्तस','रेतस आखिरस'],ui:{emp:'मालिक',wrk:'मज़दूर',listen:'बोज़िव',sign:'अंगुठ लगाविव',worked:'अज़ कोरुम कأم',approve:'पोंस दिव',offers:'नव कأم',wallet:'पोंस',trust:'तारख',roster:'मज़दूर',create:'नव कأم',cancel:'रद्द',verify:'जांचिव',cashout:'बैंक सोज़िव',lang:'ज़बान'},t:'कأم: {w}। तनखाह: {a} रॅप्य {p}। हफ्तस मंज़ {d} दोह। अदायगी {q}। दोंह्वय हुंद रज़ामंदी ज़रूरी छु। मज़दूर २४ घंटन मंज़ रद्द करिथ हेकि।'},
+doi:{n:'डोगरी',e:'Dogri',c:'doi-IN',w:['घरै दा कम्म','निर्माण','सिलाई','खेती','ड्राइवर','बच्चें दी देखभाल'],u:['१ दिन','१ म्हीना','१ पीस'],q:['रोज़','हर हफ्ते','म्हीने दे अंत च'],ui:{emp:'मालक',wrk:'मज़दूर',listen:'सुनो',sign:'अंगूठा लाओ',worked:'अज्ज कम्म कीता',approve:'पैसे देओ',offers:'नमां कम्म',wallet:'पैसे',trust:'तारे',roster:'मज़दूर',create:'नमां कम्म',cancel:'रद्द',verify:'जांचो',cashout:'बैंक भेजो',lang:'भाशा'},t:'कम्म: {w}। मज़दूरी: {a} रपे {p}। हफ्ते च {d} दिन। अदायगी {q}। दोंहें दी रज़ामंदी ज़रूरी ऐ। मज़दूर २४ घैंटे च रद्द करी सकदा ऐ।'},
+mni:{n:'ꯃꯩꯇꯩꯂꯣꯟ',e:'Manipuri',c:'mni-IN',w:['ꯌꯨꯝꯒꯤ ꯊꯕꯛ','ꯁꯥꯕ-ꯁꯥꯍꯤꯠ','ꯐꯤ ꯁꯦꯝꯕ','ꯂꯧꯎ-ꯁꯤꯡꯎ','ꯒꯥꯔꯤ ꯊꯧꯕ','ꯑꯉꯥꯡ ꯌꯦꯡꯕ'],u:['ꯅꯨꯃꯤꯠ ꯱','ꯊꯥ ꯱','ꯃꯆꯥ ꯱'],q:['ꯅꯣꯡꯃ ꯈꯨꯗꯤꯡ','ꯆꯌꯣꯜ ꯈꯨꯗꯤꯡ','ꯊꯥ ꯂꯣꯏꯕꯗ'],ui:{emp:'ꯊꯕꯛ ꯄꯤꯕ',wrk:'ꯊꯕꯛ ꯁꯨꯕ',listen:'ꯇꯥꯕꯤꯌꯨ',sign:'ꯈꯨꯠꯌꯦꯛ',worked:'ꯉꯁꯤ ꯊꯕꯛ ꯇꯧꯔꯦ',approve:'ꯁꯦꯜ ꯄꯤꯕ',offers:'ꯑꯅꯧꯕ ꯊꯕꯛ',wallet:'ꯁꯦꯜ',trust:'ꯊꯋꯥꯟꯃꯤꯆꯥꯛ',roster:'ꯊꯕꯛ ꯁꯨꯕꯁꯤꯡ',create:'ꯑꯅꯧꯕ ꯊꯕꯛ',cancel:'ꯇꯣꯛꯄ',verify:'ꯌꯦꯡꯁꯤꯟꯕ',cashout:'ꯕꯦꯡꯛꯇ ꯊꯥꯕ',lang:'ꯂꯣꯟ'},t:'ꯊꯕꯛ: {w}। ꯇꯂꯞ: ꯂꯨꯄꯥ {a} {p}। ꯆꯌꯣꯜꯗ ꯅꯨꯃꯤꯠ {d}। ꯁꯦꯜ ꯄꯤꯕ {q}। ꯑꯅꯤꯃꯛ ꯌꯥꯕ ꯃꯊꯧ ꯇꯥꯏ। ꯊꯕꯛ ꯁꯨꯕꯅ ꯄꯨꯡ ꯲꯴ ꯃꯅꯨꯡꯗ ꯇꯣꯛꯄ ꯌꯥꯏ।'},
+sat:{n:'ᱥᱟᱱᱛᱟᱲᱤ',e:'Santali',c:'sat-IN',w:['ᱚᱲᱟᱜ ᱠᱟᱹᱢᱤ','ᱵᱮᱱᱟᱣ','ᱥᱤᱞᱟᱹᱭ','ᱪᱟᱥ','ᱰᱨᱟᱭᱵᱷᱟᱨ','ᱜᱤᱫᱽᱨᱟᱹ ᱡᱚᱛᱚᱱ'],u:['᱑ ᱫᱤᱱ','᱑ ᱪᱟᱸᱫᱚ','᱑ ᱴᱩᱠᱨᱟᱹ'],q:['ᱫᱤᱱᱟᱹᱢ','ᱦᱟᱯᱛᱟ ᱯᱤᱪᱷᱤ','ᱪᱟᱸᱫᱚ ᱢᱩᱪᱟᱹᱫ'],ui:{emp:'ᱢᱟᱹᱞᱤᱠ',wrk:'ᱠᱟᱹᱢᱤᱭᱟᱹ',listen:'ᱟᱸᱡᱚᱢ ᱢᱮ',sign:'ᱴᱤᱯ ᱪᱤᱱᱦᱟᱹ',worked:'ᱛᱮᱦᱮᱧ ᱠᱟᱹᱢᱤ ᱠᱮᱫᱟ',approve:'ᱴᱟᱠᱟ ᱮᱢᱚᱜ',offers:'ᱱᱟᱣᱟ ᱠᱟᱹᱢᱤ',wallet:'ᱴᱟᱠᱟ',trust:'ᱤᱯᱤᱞ',roster:'ᱠᱟᱹᱢᱤᱭᱟᱹ',create:'ᱱᱟᱣᱟ ᱠᱟᱹᱢᱤ',cancel:'ᱵᱟᱹᱛᱤᱞ',verify:'ᱧᱮᱞ ᱵᱤᱰᱟᱹᱣ',cashout:'ᱵᱮᱸᱠ ᱛᱮ ᱵᱷᱮᱡᱟ',lang:'ᱯᱟᱹᱨᱥᱤ'},t:'ᱠᱟᱹᱢᱤ: {w}। ᱠᱩᱲᱟᱹᱭ: {a} ᱴᱟᱠᱟ {p}। ᱦᱟᱯᱛᱟ ᱨᱮ {d} ᱢᱟᱦᱟᱸ। ᱮᱢᱚᱜ {q}। ᱵᱟᱱᱟᱨ ᱥᱟᱦᱟᱛᱮ ᱨᱮᱵᱮᱱ ᱞᱟᱹᱠᱛᱤ ᱠᱟᱱᱟ। ᱠᱟᱹᱢᱤᱭᱟᱹ ᱒᱔ ᱴᱟᱲᱟᱝ ᱵᱷᱤᱛᱨᱤ ᱨᱮ ᱵᱟᱹᱛᱤᱞ ᱫᱟᱲᱮᱭᱟᱜᱼᱟ।'},
+brx:{n:"बर'",e:'Bodo',c:'brx-IN',w:['नखरनि खामानि','दानाय लुनाय','सिलाइ','आबाद','ड्राइभार','गथ’ सामलायनाय'],u:['१ सान','१ दान','१ मोनसे'],q:['सालफ्रोमबो','सप्ताहफ्रोमबो','दान जोबनायाव'],ui:{emp:'मालिक',wrk:'खामानि मावग्रा',listen:'खोनासं',sign:'आखाय साप',worked:'दिनै खामानि मावबाय',approve:'रां हो',offers:'गोदान खामानि',wallet:'रां',trust:'हाथर्खि',roster:'खामानि मावग्रा',create:'गोदान खामानि',cancel:'बोखां',verify:'नायफिन',cashout:'बेंकआव हर',lang:'राव'},t:'खामानि: {w}। बेथन: {a} रां {p}। सप्ताहाव {d} सान। रां होनाय {q}। सानैनिबो गोरोबनाय नांगौ। खामानि मावग्राया २४ घन्टानि गेजेराव बोखांनो हागौ।'}
+};
+
+const WI=['home','build','scissors','sprout','wheel','face'];
+const WK=['dom','con','gar','farm','drv','care'];
+const PK=['day','month','piece'];
+const DAYS=['M','T','W','T','F','S','S'];
+const L={};
+for(const k in LANG_RAW){
+  const x=LANG_RAW[k];
+  L[k]={
+    code:x.c,n:x.n,e:x.e,rtl:!!x.rtl,q:x.q,ui:x.ui,
+    work:Object.fromEntries(WK.map((w,i)=>[w,[WI[i],x.w[i]]])),
+    per:Object.fromEntries(PK.map((p,i)=>[p,x.u[i]])),
+    sum:(w,a,p,d,pd)=>x.t.replace(/\{(\w)\}/g,(_,c)=>({w,a,p,d,q:x.q[pd??0]})[c])
+  };
+}
+
+/* ==========================================================================
+   100% OFFLINE, SPEC-COMPLIANT QR CODE SVG GENERATOR (VERSIONS 1-4, LEVEL L)
+   Fixes broken external CDN & unscaled SVG cropping issues permanently
+   ========================================================================== */
+const QR_GF=(()=>{
+  const exp=new Uint8Array(512),log=new Uint8Array(256);
+  let x=1;
+  for(let i=0;i<255;i++){exp[i]=x;log[x]=i;x<<=1;if(x&0x100)x^=0x11d;}
+  for(let i=255;i<512;i++)exp[i]=exp[i-255];
+  return{exp,log};
+})();
+function qrMul(a,b){return(a===0||b===0)?0:QR_GF.exp[QR_GF.log[a]+QR_GF.log[b]];}
+function qrRs(data,nsym){
+  let g=[1];
+  for(let i=0;i<nsym;i++){
+    const ng=new Array(g.length+1).fill(0);
+    for(let j=0;j<g.length;j++){ng[j]^=g[j];ng[j+1]^=qrMul(g[j],QR_GF.exp[i]);}
+    g=ng;
+  }
+  const res=data.concat(new Array(nsym).fill(0));
+  for(let i=0;i<data.length;i++){
+    const c=res[i];
+    if(c!==0)for(let j=1;j<g.length;j++)res[i+j]^=qrMul(g[j],c);
+  }
+  return res.slice(data.length);
+}
+function makeQrSvg(text){
+  const raw=[...new TextEncoder().encode(text)];
+  const specs=[
+    null,
+    [26,19,7,[]],
+    [44,34,10,[6,18]],
+    [70,55,15,[6,22]],
+    [100,80,20,[6,26]]
+  ];
+  let ver=1;
+  while(ver<=4&&raw.length+2>specs[ver][1])ver++;
+  if(ver>4)ver=4;
+  const[,dataCw,eccCw,align]=specs[ver];
+  const payload=raw.slice(0,dataCw-2);
+  const size=17+4*ver;
+
+  const bits=[];
+  const push=(v,n)=>{for(let i=n-1;i>=0;i--)bits.push((v>>i)&1);};
+  push(0b0100,4);
+  push(payload.length,8);
+  payload.forEach(b=>push(b,8));
+  push(0,Math.min(4,dataCw*8-bits.length));
+  while(bits.length%8)bits.push(0);
+
+  const cw=[];
+  for(let i=0;i<bits.length;i+=8){
+    let b=0;for(let j=0;j<8;j++)b=(b<<1)|bits[i+j];cw.push(b);
+  }
+  const pads=[0xEC,0x11];let pi=0;
+  while(cw.length<dataCw)cw.push(pads[(pi++)%2]);
+  const allCw=cw.concat(qrRs(cw,eccCw));
+  const stream=[];
+  allCw.forEach(b=>{for(let i=7;i>=0;i--)stream.push((b>>i)&1);});
+
+  const mat=Array.from({length:size},()=>new Uint8Array(size));
+  const fn=Array.from({length:size},()=>new Uint8Array(size));
+  const setM=(r,c,v)=>{mat[r][c]=v;fn[r][c]=1;};
+
+  const finder=(r0,c0)=>{
+    for(let r=-1;r<=7;r++)for(let c=-1;c<=7;c++){
+      const rr=r0+r,cc=c0+c;
+      if(rr>=0&&rr<size&&cc>=0&&cc<size){
+        const inB=r>=0&&r<=6&&c>=0&&c<=6;
+        const v=inB&&(r===0||r===6||c===0||c===6||(r>=2&&r<=4&&c>=2&&c<=4))?1:0;
+        setM(rr,cc,v);
+      }
+    }
+  };
+  finder(0,0);finder(0,size-7);finder(size-7,0);
+
+  for(const r0 of align)for(const c0 of align){
+    if(fn[r0][c0])continue;
+    for(let r=-2;r<=2;r++)for(let c=-2;c<=2;c++){
+      setM(r0+r,c0+c,(Math.abs(r)===2||Math.abs(c)===2||(r===0&&c===0))?1:0);
+    }
+  }
+  for(let i=8;i<size-8;i++){
+    if(!fn[6][i])setM(6,i,1-(i%2));
+    if(!fn[i][6])setM(i,6,1-(i%2));
+  }
+  setM(size-8,8,1);
+  for(let i=0;i<9;i++){if(!fn[8][i])setM(8,i,0);if(!fn[i][8])setM(i,8,0);}
+  for(let i=0;i<8;i++){if(!fn[8][size-1-i])setM(8,size-1-i,0);if(!fn[size-1-i][8])setM(size-1-i,8,0);}
+
+  let bi=0,up=true,col=size-1;
+  while(col>0){
+    if(col===6)col--;
+    for(let step=0;step<size;step++){
+      const r=up?(size-1-step):step;
+      for(const dc of[0,-1]){
+        const cc=col+dc;
+        if(!fn[r][cc]){
+          let bit=bi<stream.length?stream[bi++]:0;
+          if((r+cc)%2===0)bit^=1;
+          mat[r][cc]=bit;
+        }
+      }
+    }
+    up=!up;col-=2;
+  }
+
+  const fmt=0x77C4;
+  for(let i=0;i<6;i++)setM(8,i,(fmt>>(14-i))&1);
+  setM(8,7,(fmt>>8)&1);setM(8,8,(fmt>>7)&1);setM(7,8,(fmt>>6)&1);
+  for(let i=0;i<6;i++)setM(5-i,8,(fmt>>(5-i))&1);
+  for(let i=0;i<7;i++)setM(size-1-i,8,(fmt>>(14-i))&1);
+  for(let i=0;i<8;i++)setM(8,size-8+i,(fmt>>(7-i))&1);
+
+  let rects='';
+  for(let r=0;r<size;r++)for(let c=0;c<size;c++){
+    if(mat[r][c])rects+=`<rect x="${c}" y="${r}" width="1" height="1"/>`;
+  }
+  return`<svg viewBox="-4 -4 ${size+8} ${size+8}" shape-rendering="crispEdges" role="img" aria-label="Contract QR Code"><rect x="-4" y="-4" width="${size+8}" height="${size+8}" fill="#ffffff"/><g fill="#000000">${rects}</g></svg>`;
+}
+
+function openQrModal(idx){
+  const c=db.c[idx];if(!c)return;
+  const payload=`saboot:${c.terms.id}:${c.hash.slice(0,16)}`;
+  const m=document.createElement('div');m.className='modal';
+  m.onclick=e=>{if(e.target===m)m.remove()};
+  m.innerHTML=`<div class="card" style="text-align:center">
+    <div class="card-hd"><div class="badge-pic">${I('search',28)}</div><h2>${c.terms.id}</h2><button class="btn sm ghost" onclick="this.closest('.modal').remove()">X</button></div>
+    <div style="max-width:250px;margin:10px auto;border:3px solid #0a2e5c;border-radius:10px;padding:10px;background:#fff">${makeQrSvg(payload)}</div>
+    <div style="font-weight:800;font-size:1.1rem;margin-top:8px">${c.terms.id}</div>
+  </div>`;
+  document.body.appendChild(m);
+}
+
+/* ==========================================================================
+   GEOMETRIC SHAPE FINGERPRINT (ZERO EMOJIS, WORKS ON ALL PHONES)
+   ========================================================================== */
+const SHAPE_SVGS=[
+  '<svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#d95300"/></svg>',
+  '<svg width="24" height="24" viewBox="0 0 24 24"><polygon points="12,3 22,20 2,20" fill="#0f6b2f"/></svg>',
+  '<svg width="24" height="24" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="#0a2e5c"/></svg>',
+  '<svg width="24" height="24" viewBox="0 0 24 24"><polygon points="12,2 22,12 12,22 2,12" fill="#b45309"/></svg>',
+  '<svg width="24" height="24" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="#0a2e5c"/></svg>',
+  '<svg width="24" height="24" viewBox="0 0 24 24"><polygon points="7,3 17,3 22,12 17,21 7,21 2,12" fill="#0f6b2f"/></svg>',
+  '<svg width="24" height="24" viewBox="0 0 24 24"><path d="M10 3h4v7h7v4h-7v7h-4v-7H3v-4h7z" fill="#d95300"/></svg>',
+  '<svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="#0a2e5c" stroke-width="4"/><circle cx="12" cy="12" r="3" fill="#d95300"/></svg>'
+];
+const shapeFingerprint=h=>[0,2,4].map(i=>SHAPE_SVGS[parseInt(h[i],16)%SHAPE_SVGS.length]).join('');
+
+/* ==========================================================================
+   VOICE SYSTEM (23 LANGUAGES + KARAOKE HIGHLIGHT + MIC RECORDING)
+   ========================================================================== */
+let voiceState={playing:false,timer:null,audio:null,aborted:false};
+let recState={recording:false,recorder:null,chunks:[]};
+const TTS_CODE={en:'en-IN',hi:'hi',od:'or',bn:'bn',mr:'mr',gu:'gu',ta:'ta',te:'te',kn:'kn',ml:'ml',pa:'pa',as:'as',ur:'ur',ne:'ne',kok:'mr',mai:'hi',sa:'sa',sd:'sd',ks:'ur',doi:'hi',mni:'bn',sat:'bn',brx:'hi'};
+
+function findOSVoice(lang){
+  if(!('speechSynthesis' in window))return null;
+  const voices=speechSynthesis.getVoices();
+  if(!voices.length)return null;
+  const target=L[lang].code.toLowerCase();
+  const p2=target.split('-')[0];
+  const alt={od:['or','ory']};
+  const candidates=[p2,...(alt[lang]||[])];
+  const exact=voices.find(v=>v.lang.replace('_','-').toLowerCase()===target);
+  if(exact)return exact;
+  for(const c of candidates){
+    const hit=voices.find(v=>v.lang.replace('_','-').toLowerCase().startsWith(c));
+    if(hit)return hit;
+  }
+  return null;
+}
+
+function stopVoice(){
+  voiceState.aborted=true;
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  if(voiceState.audio){try{voiceState.audio.pause();voiceState.audio.src=''}catch(e){}voiceState.audio=null;}
+  if(voiceState.timer){clearInterval(voiceState.timer);voiceState.timer=null;}
+  voiceState.playing=false;
+  document.querySelectorAll('.kword.on').forEach(el=>el.classList.remove('on'));
+  document.querySelectorAll('.speaking').forEach(el=>el.classList.remove('speaking'));
+}
+
+function chunkText(text,maxLen=160){
+  const parts=text.split(/(?<=[।.!?])\s+/);
+  const chunks=[];let cur='';
+  for(const p of parts){
+    if((cur+' '+p).trim().length<=maxLen)cur=(cur+' '+p).trim();
+    else{if(cur)chunks.push(cur);cur=p.slice(0,maxLen);}
+  }
+  if(cur)chunks.push(cur);
+  return chunks.length?chunks:[text.slice(0,maxLen)];
+}
+
+function speakCloudTTS(text,lang,rate,words,onProgress,onDone){
+  const tl=TTS_CODE[lang]||'hi';
+  const chunks=chunkText(text,160);
+  let ci=0,wi=0;
+  voiceState.playing=true;
+  const estMs=Math.max(190,Math.round((text.length*58)/(words.length||1)/rate));
+  voiceState.timer=setInterval(()=>{if(wi<words.length){onProgress(wi);wi++;}},estMs);
+
+  function nextChunk(){
+    if(voiceState.aborted)return;
+    if(ci>=chunks.length){stopVoice();onDone('cloud');return;}
+    const q=encodeURIComponent(chunks[ci++]);
+    const audio=new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${tl}&q=${q}`);
+    audio.referrerPolicy='no-referrer';
+    audio.playbackRate=rate;
+    voiceState.audio=audio;
+    audio.onended=()=>nextChunk();
+    audio.onerror=()=>{stopVoice();speakSilentKaraoke(words,rate,onProgress,onDone);};
+    audio.play().catch(()=>{stopVoice();speakSilentKaraoke(words,rate,onProgress,onDone);});
+  }
+  nextChunk();
+}
+
+function speakSilentKaraoke(words,rate,onProgress,onDone){
+  voiceState.playing=true;voiceState.aborted=false;
+  let wi=0;
+  const stepMs=Math.max(180,Math.round(340/rate));
+  onProgress(0);wi=1;
+  voiceState.timer=setInterval(()=>{
+    if(wi>=words.length){stopVoice();onDone('text');return;}
+    onProgress(wi);wi++;
+  },stepMs);
+}
+
+function speakText(text,lang,opts={}){
+  stopVoice();
+  voiceState.aborted=false;
+  const onDone=opts.onEnd||(()=>{});
+  const onProgress=opts.onWord||(()=>{});
+  const words=text.split(/\s+/).filter(Boolean);
+  const rate=db.voiceRate||0.9;
+
+  if(opts.audioData){
+    try{
+      const audio=new Audio(opts.audioData);
+      voiceState.audio=audio;voiceState.playing=true;
+      let wi=0;
+      const stepMs=Math.max(180,Math.round(320/rate));
+      voiceState.timer=setInterval(()=>{if(wi<words.length){onProgress(wi);wi++;}},stepMs);
+      audio.onended=()=>{stopVoice();onDone('custom');};
+      audio.onerror=()=>{stopVoice();speakCloudTTS(text,lang,rate,words,onProgress,onDone);};
+      audio.play().catch(()=>speakCloudTTS(text,lang,rate,words,onProgress,onDone));
+      return;
+    }catch(e){}
+  }
+
+  const osVoice=findOSVoice(lang);
+  if('speechSynthesis' in window&&osVoice){
+    const u=new SpeechSynthesisUtterance(text);
+    u.voice=osVoice;u.lang=osVoice.lang||L[lang].code;u.rate=rate;
+    voiceState.playing=true;
+    let wi=0;
+    const estMs=Math.max(190,Math.round((text.length*55)/(words.length||1)/rate));
+    voiceState.timer=setInterval(()=>{if(wi<words.length){onProgress(wi);wi++;}},estMs);
+    u.onboundary=e=>{
+      if(e.name==='word'){
+        const before=text.slice(0,e.charIndex).trim();
+        const idx=before?before.split(/\s+/).length:0;
+        if(idx<words.length){wi=idx;onProgress(idx);}
+      }
+    };
+    u.onend=()=>{stopVoice();onDone('os');};
+    u.onerror=()=>{stopVoice();speakCloudTTS(text,lang,rate,words,onProgress,onDone);};
+    speechSynthesis.speak(u);
+    return;
+  }
+  speakCloudTTS(text,lang,rate,words,onProgress,onDone);
+}
+
+function renderKaraoke(id,text){
+  return`<div class="karaoke" id="${id}">${text.split(/\s+/).filter(Boolean).map((w,i)=>`<span class="kword" data-wi="${i}">${w}</span>`).join(' ')}</div>`;
+}
+function highlightWord(containerId,idx){
+  const box=document.getElementById(containerId);
+  if(!box)return;
+  box.querySelectorAll('.kword.on').forEach(el=>el.classList.remove('on'));
+  const el=box.querySelector(`.kword[data-wi="${idx}"]`);
+  if(el)el.classList.add('on');
+}
+
+/* ==========================================================================
+   CRYPTOGRAPHY & STORAGE
+   ========================================================================== */
+async function sha(t){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+const canon=t=>JSON.stringify([t.id,t.work,t.wage,t.per,t.days,t.lang,t.ts,t.pd,t.empName||'',t.wrkName||'']);
+const b64=b=>btoa(String.fromCharCode(...new Uint8Array(b)));
+const ALG={name:'ECDSA',namedCurve:'P-256'},SG={name:'ECDSA',hash:'SHA-256'},enc=x=>new TextEncoder().encode(x);
+async function mk(){const k=await crypto.subtle.generateKey(ALG,true,['sign','verify']);return{pub:await crypto.subtle.exportKey('jwk',k.publicKey),prv:await crypto.subtle.exportKey('jwk',k.privateKey)}}
+async function sig(prv,h){const k=await crypto.subtle.importKey('jwk',prv,ALG,false,['sign']);return b64(await crypto.subtle.sign(SG,k,enc(h)))}
+async function chk(pub,sg,h){try{const k=await crypto.subtle.importKey('jwk',pub,ALG,false,['verify']);return await crypto.subtle.verify(SG,k,Uint8Array.from(atob(sg),c=>c.charCodeAt(0)),enc(h))}catch(e){return false}}
+
+function loadDB(){try{const raw=localStorage.getItem('saboot_gov_v1');if(raw)return JSON.parse(raw);}catch(e){}return null;}
+function saveDB(){try{localStorage.setItem('saboot_gov_v1',JSON.stringify(db));}catch(e){}}
+
+let db=loadDB();
+async function initSeedData(){
+  if(db)return;
+  const now=Date.now();
+  const t1={id:'SB4829A',work:'con',wage:550,per:'day',days:[0,1,2,3,4,5],lang:'od',pd:1,ts:new Date(now-864e5*4).toISOString(),empName:'Kalinga Builders',wrkName:'Ramesh Nayak'};
+  const h1=await sha(canon(t1));
+  const e1=await mk(),w1=await mk();
+  const ev1Ts=new Date(now-864e5*2).toISOString();
+  const ev1={k:'p',ok:true,amt:550,ts:ev1Ts,hash:await sha(h1+'p'+true+550+ev1Ts)};
+  const ev2Ts=new Date(now-864e5*2+36e5).toISOString();
+  const ev2={k:'a',ok:true,amt:0,ts:ev2Ts,hash:await sha(ev1.hash+'a'+true+0+ev2Ts)};
+
+  const t2={id:'SB9104K',work:'dom',wage:6500,per:'month',days:[0,1,2,3,4,5,6],lang:'hi',pd:2,ts:new Date(now-36e5*2).toISOString(),empName:'Meera Sharma',wrkName:'Sunita Devi'};
+  const h2=await sha(canon(t2));
+  const e2=await mk();
+
+  db={
+    role:null,
+    lang:'hi',
+    voiceRate:0.9,
+    off:0,
+    w:{e:8500,k:550,tx:[
+      {k:'pay',amt:550,note:'SB4829A',ts:ev2Ts},
+      {k:'fund',amt:3300,note:'SB4829A',ts:t1.ts},
+      {k:'topup',amt:11800,note:'Bank / UPI',ts:new Date(now-864e5*5).toISOString()}
+    ]},
+    shares:[],
+    c:[
+      {terms:t1,hash:h1,until:now-864e5*3,status:'active',ev:[ev1,ev2],esc:{lock:2750,days:[{d:new Date(now-864e5*2).toISOString().slice(0,10),st:'paid',at:now-864e5*2,amt:550},{d:new Date(now).toISOString().slice(0,10),st:'pending',at:now-36e5*3,amt:550}]},sig:{e:{pub:e1.pub,s:await sig(e1.prv,h1)},w:{pub:w1.pub,s:await sig(w1.prv,h1)}},voiceClip:null},
+      {terms:t2,hash:h2,until:now+864e5,status:'offer',ev:[],esc:{lock:0,days:[]},sig:{e:{pub:e2.pub,s:await sig(e2.prv,h2)},w:null},voiceClip:null}
+    ]
+  };
+  saveDB();
+}
+
+/* ==========================================================================
+   ACCESSIBILITY CONTROLS (FONT SCALE & HIGH CONTRAST)
+   ========================================================================== */
+let fontOffset=0;
+function setFontScale(delta){
+  fontOffset=delta===0?0:Math.max(-2,Math.min(6,fontOffset+delta));
+  document.documentElement.style.setProperty('--fs',(18+fontOffset)+'px');
+}
+function toggleContrast(){
+  const r=document.documentElement;
+  const on=r.dataset.contrast==='high';
+  r.dataset.contrast=on?'':'high';
+  const b=$('#hc-btn');
+  if(b)b.setAttribute('aria-pressed',String(!on));
+}
+
+/* ==========================================================================
+   STATE & ACTIONS
+   ========================================================================== */
+let tab='work';
+let draft={work:'con',wage:'500',per:'day',days:new Set([0,1,2,3,4,5]),pd:0,empName:'Apex Site Works',wrkName:'',voiceClip:null};
+let offerHeard={};
+let pieceInputs={};
+
+const inr=n=>'₹'+Number(n||0).toLocaleString('en-IN');
+const nowD=()=>Date.now()+((db&&db.off)||0)*864e5;
+const dkey=()=>new Date(nowD()).toISOString().slice(0,10);
+const dayAmt=t=>t.per==='day'?t.wage:t.per==='month'?Math.round(t.wage*12/52/Math.max(1,t.days.length)):t.wage;
+const held=e=>(e.days||[]).filter(d=>d.st==='pending'||d.st==='disputed').reduce((n,d)=>n+d.amt,0);
+function toast(m){const d=document.createElement('div');d.className='toast';d.setAttribute('role','status');d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),2600);}
+function ask(msg,fn){const m=document.createElement('div');m.className='modal';m.innerHTML=`<div class="card"><h2>${msg}</h2><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px"><button class="btn green" id="y">OK</button><button class="btn ghost" id="n">X</button></div></div>`;document.body.appendChild(m);m.querySelector('#y').onclick=()=>{m.remove();fn()};m.querySelector('#n').onclick=()=>m.remove();}
+function tx(k,amt,note){db.w.tx.unshift({k,amt,note,ts:new Date(nowD()).toISOString()});db.w.tx.length=Math.min(db.w.tx.length,60);}
+
+function setRole(r){
+  stopVoice();
+  db.role=r;
+  tab=r==='employer'?'roster':'work';
+  saveDB();render();
+}
+function setLang(k){
+  stopVoice();
+  db.lang=k;
+  document.documentElement.lang=L[k].code.split('-')[0];
+  document.documentElement.dir=L[k].rtl?'rtl':'ltr';
+  saveDB();
+  document.querySelector('.modal')?.remove();
+  render();
+}
+
+async function createOffer(){
+  const wage=+draft.wage;
+  if(!wage||wage<=0){toast('₹ ?');return;}
+  if(!draft.days.size){toast('1+ day');return;}
+  const t={
+    id:'SB'+Math.random().toString(36).slice(2,7).toUpperCase(),
+    work:draft.work,wage,per:draft.per,days:[...draft.days].sort(),
+    lang:db.lang,pd:draft.pd,ts:new Date(nowD()).toISOString(),
+    empName:(draft.empName||'Employer').trim(),wrkName:(draft.wrkName||'Worker').trim()
+  };
+  const hash=await sha(canon(t));
+  const Ekeys=await mk();
+  db.c.unshift({
+    terms:t,hash,until:nowD()+864e5,status:'offer',ev:[],
+    esc:{lock:0,days:[]},
+    sig:{e:{pub:Ekeys.pub,s:await sig(Ekeys.prv,hash)},w:null},
+    voiceClip:draft.voiceClip||null
+  });
+  draft.voiceClip=null;
+  saveDB();
+  toast(t.id);
+  tab='roster';
+  render();
+}
+
+async function workerSignOffer(idx){
+  const c=db.c[idx];
+  if(!c||c.status!=='offer')return;
+  if(!offerHeard[c.terms.id]){speakText(L[db.lang].sum(L[db.lang].work[c.terms.work][1],c.terms.wage,L[db.lang].per[c.terms.per],c.terms.days.length,c.terms.pd),db.lang);return;}
+  const Wkeys=await mk();
+  c.sig.w={pub:Wkeys.pub,s:await sig(Wkeys.prv,c.hash)};
+  c.status='active';
+  c.until=nowD()+864e5;
+  saveDB();
+  toast('OK · '+c.terms.id);
+  tab='work';
+  render();
+}
+
+function workerCancel(idx){
+  ask('24h ' + L[db.lang].ui.cancel + '?',()=>{
+    db.c[idx].status='withdrawn';
+    saveDB();render();
+  });
+}
+
+function fundEscrow(idx,daysCount){
+  const c=db.c[idx],a=daysCount*dayAmt(c.terms);
+  if(db.w.e<a){toast('+ ₹');return;}
+  db.w.e-=a;c.esc.lock+=a;
+  tx('fund',a,`${c.terms.id} (${daysCount}d)`);
+  saveDB();render();toast(`+ ${inr(a)}`);
+}
+
+function reclaimEscrow(idx){
+  const c=db.c[idx],e=c.esc,reserve=c.status==='active'?3*dayAmt(c.terms):0;
+  const spare=e.lock-held(e)-reserve;
+  if(spare<=0){toast('3d reserve locked');return;}
+  e.lock-=spare;db.w.e+=spare;
+  tx('refund',spare,c.terms.id);
+  saveDB();render();toast(`+ ${inr(spare)}`);
+}
+
+function workerCheckIn(idx){
+  const c=db.c[idx],t=c.terms,e=c.esc;
+  let amt=dayAmt(t),note='1d';
+  if(t.per==='piece'){
+    const qty=Math.max(1,parseInt(pieceInputs[t.id]||10,10));
+    amt=qty*t.wage;
+    note=`${qty} × ${inr(t.wage)}`;
+  }
+  if(t.per!=='piece'&&e.days.some(d=>d.d===dkey()&&d.st!=='refunded')){
+    toast('OK');return;
+  }
+  e.days.push({d:dkey(),st:'pending',at:nowD(),amt,note});
+  saveDB();render();
+  speakText(L[db.lang].ui.worked+' '+inr(amt),db.lang);
+}
+
+async function addChainEvent(idx,k,ok,amt){
+  const c=db.c[idx],prev=c.ev.length?c.ev[c.ev.length-1].hash:c.hash,ts=new Date(nowD()).toISOString();
+  c.ev.push({k,ok:!!ok,amt,ts,hash:await sha(prev+k+!!ok+amt+ts)});
+}
+
+async function settleDay(idx,j,auto){
+  const c=db.c[idx],e=c.esc,d=e.days[j];
+  if(!d||d.st!=='pending')return false;
+  if(e.lock<d.amt){if(!auto)toast('+ ₹');return false;}
+  e.lock-=d.amt;
+  d.st=auto?'auto':'paid';
+  db.w.k+=d.amt;
+  tx('pay',d.amt,`${c.terms.id}${auto?' (24h)':''}`);
+  await addChainEvent(idx,'p',1,d.amt);
+  await addChainEvent(idx,'a',1,c.ev.length-1);
+  saveDB();
+  if(!auto)speakText(`${d.amt} ${L[c.terms.lang].ui.approve}`,c.terms.lang);
+  return true;
+}
+
+function disputeDay(idx,j){db.c[idx].esc.days[j].st='disputed';saveDB();render();}
+async function resolveDispute(idx,j,payWorker){
+  const c=db.c[idx],e=c.esc,d=e.days[j];
+  if(payWorker){d.st='pending';await settleDay(idx,j,false);render();}
+  else{e.lock-=d.amt;db.w.e+=d.amt;d.st='refunded';tx('refund',d.amt,c.terms.id);saveDB();render();}
+}
+
+async function sweepAutoPay(){
+  if(!db)return;
+  let changed=false;
+  for(let i=0;i<db.c.length;i++){
+    const c=db.c[i];if(c.status!=='active')continue;
+    for(let j=0;j<c.esc.days.length;j++){
+      const d=c.esc.days[j];
+      if(d.st==='pending'&&nowD()-d.at>=864e5){
+        if(await settleDay(i,j,true))changed=true;
+      }
+    }
+  }
+  if(changed)render();
+}
+
+async function verifyContract(idx){
+  const c=db.c[idx];
+  const termsOk=await sha(canon(c.terms))===c.hash;
+  let prev=c.hash,chainOk=true;
+  for(const e of c.ev){if(await sha(prev+e.k+e.ok+e.amt+e.ts)!==e.hash){chainOk=false;break;}prev=e.hash;}
+  const eSigOk=!!c.sig.e&&await chk(c.sig.e.pub,c.sig.e.s,c.hash);
+  const wSigOk=c.status==='offer'?true:(!!c.sig.w&&await chk(c.sig.w.pub,c.sig.w.s,c.hash));
+  const el=document.getElementById('ver-'+idx);
+  if(!el)return;
+  if(termsOk&&chainOk&&eSigOk&&wSigOk){
+    el.innerHTML=`<span class="status-tag ok">${I('check',20)}OK · ${c.terms.id}</span>`;
+  }else{
+    el.innerHTML=`<span class="status-tag bad">${I('alert',20)}TAMPERED</span>`;
+  }
+}
+function tamperDemo(idx){db.c[idx].terms.wage+=100;saveDB();render();verifyContract(idx);}
+
+function calcStats(){
+  let ok=0,late=0,finalN=0;
+  db.c.forEach(c=>{
+    if(c.status==='active'&&nowD()>=c.until){
+      finalN++;
+      c.ev.forEach((e,j)=>{
+        if(e.k!=='p')return;
+        const a=c.ev.find(x=>x.k==='a'&&x.amt===j);
+        if(!a||!a.ok)return;
+        e.ok?ok++:late++;
+      });
+    }
+  });
+  const pts=finalN*20+ok*10-late*5;
+  const tiers=[['1',0],['2',20],['3',60],['4',120]];
+  let t=0;tiers.forEach((x,i)=>{if(pts>=x[1])t=i;});
+  return{ok,late,finalN,pts,t,tiers,rate:ok+late?Math.round(ok/(ok+late)*100):100};
+}
+
+function openLangModal(){
+  const m=document.createElement('div');m.className='modal';
+  m.onclick=e=>{if(e.target===m)m.remove()};
+  const cards=Object.keys(L).map(k=>`<button class="lbtn" aria-pressed="${db.lang===k}" onclick="setLang('${k}')">
+    <strong>${L[k].n}</strong>
+    <small>${L[k].e}</small>
+  </button>`).join('');
+  m.innerHTML=`<div class="card">
+    <div class="card-hd"><div class="badge-pic">${I('globe',28)}</div><h2>${L[db.lang].ui.lang} (23)</h2><button class="btn sm ghost" onclick="this.closest('.modal').remove()">X</button></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
+      <select class="inp" style="max-width:160px" onchange="db.voiceRate=+this.value;saveDB()" aria-label="Voice speed">
+        <option value="0.7" ${db.voiceRate===0.7?'selected':''}>0.7x</option>
+        <option value="0.9" ${db.voiceRate===0.9?'selected':''}>0.9x</option>
+        <option value="1.15" ${db.voiceRate===1.15?'selected':''}>1.15x</option>
+      </select>
+      <button class="btn speak" onclick="speakText(L[db.lang].sum(L[db.lang].work.con[1],500,L[db.lang].per.day,6,0),db.lang)">${I('speaker',24)}${L[db.lang].ui.listen}</button>
+    </div>
+    <div class="lgrid">${cards}</div>
+  </div>`;
+  document.body.appendChild(m);
+}
+
+function toggleVoiceRecord(onSaved){
+  if(recState.recording&&recState.recorder){recState.recorder.stop();return;}
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){toast('No Mic');return;}
+  navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+    recState.chunks=[];
+    const mr=new MediaRecorder(stream);
+    recState.recorder=mr;recState.recording=true;render();
+    mr.ondataavailable=e=>{if(e.data.size>0)recState.chunks.push(e.data);};
+    mr.onstop=()=>{
+      stream.getTracks().forEach(t=>t.stop());
+      recState.recording=false;
+      const blob=new Blob(recState.chunks,{type:'audio/webm'});
+      const r=new FileReader();
+      r.onloadend=()=>{onSaved(r.result);toast('OK');render();};
+      r.readAsDataURL(blob);
+    };
+    mr.start();
+  }).catch(()=>toast('Mic blocked'));
+}
+
+async function openPack(idx){
+  const c=db.c[idx],t=c.terms,l=L.en;
+  const txt=`SABOOT ${t.id}\n${t.empName||'Employer'} -> ${t.wrkName||'Worker'}\n${l.work[t.work][1]} | Rs ${t.wage} (${l.per[t.per]}) | ${t.days.length}d/wk\nLocked: ${inr(c.esc.lock)}\nHash: ${c.hash}`;
+  const m=document.createElement('div');m.className='modal';
+  m.onclick=e=>{if(e.target===m)m.remove()};
+  m.innerHTML=`<div class="card"><div class="card-hd"><div class="badge-pic">${I('file',28)}</div><h2>${t.id}</h2><button class="btn sm ghost" onclick="this.closest('.modal').remove()">X</button></div><pre style="white-space:pre-wrap;font-size:0.85rem;background:var(--soft);padding:12px;border-radius:8px;border:2px solid var(--bd)">${txt}</pre><div style="display:flex;gap:10px;margin-top:12px"><button class="btn sm" id="cp">Copy</button><button class="btn sm green" id="wa">${I('share',20)}WhatsApp</button></div></div>`;
+  document.body.appendChild(m);
+  m.querySelector('#cp').onclick=()=>{try{navigator.clipboard.writeText(txt);toast('OK');}catch(e){}};
+  m.querySelector('#wa').onclick=()=>window.open('https://wa.me/?text='+encodeURIComponent(txt),'_blank');
+}
+
+/* ==========================================================================
+   VISUAL PICTURE-FIRST VIEWS (FOR ILLITERATE & RURAL USERS)
+   ========================================================================== */
+function renderOnboarding(){
+  const l=L[db.lang];
+  return`<div class="onboard">
+    <div class="rcard">
+      <div style="display:flex;align-items:center;gap:14px">
+        ${PIC('worker',74)}
+        <h1 style="margin:0;font-size:1.55rem;flex:1">${l.ui.wrk}</h1>
+        <button class="speak-sq" onclick="speakText('${l.ui.wrk}. ${l.ui.listen}, ${l.ui.sign}, ${l.ui.worked}, ${l.ui.wallet}.','${db.lang}')" aria-label="${l.ui.listen}">${I('speaker',28)}</button>
+      </div>
+      <div class="step-strip">
+        <div class="step-item">${I('speaker',30)}<span>1. ${l.ui.listen}</span></div>
+        <div class="step-item">${I('thumb',30)}<span>2. ${l.ui.sign}</span></div>
+        <div class="step-item">${I('rupee',30)}<span>3. ${l.ui.wallet}</span></div>
+      </div>
+      <button class="btn green full" onclick="setRole('worker')">${I('user',24)}${l.ui.wrk} ${I('right',24)}</button>
+    </div>
+
+    <div class="rcard">
+      <div style="display:flex;align-items:center;gap:14px">
+        ${PIC('employer',74)}
+        <h2 style="margin:0;font-size:1.55rem;flex:1">${l.ui.emp}</h2>
+        <button class="speak-sq" onclick="speakText('${l.ui.emp}. ${l.ui.create}, ${l.ui.approve}.','${db.lang}')" aria-label="${l.ui.listen}">${I('speaker',28)}</button>
+      </div>
+      <div class="step-strip">
+        <div class="step-item">${I('plus',30)}<span>1. ${l.ui.create}</span></div>
+        <div class="step-item">${I('lock',30)}<span>2. ₹ Safe</span></div>
+        <div class="step-item">${I('check',30)}<span>3. ${l.ui.approve}</span></div>
+      </div>
+      <button class="btn full" onclick="setRole('employer')">${I('brief',24)}${l.ui.emp} ${I('right',24)}</button>
+    </div>
+  </div>`;
+}
+
+function renderPictureEquation(c){
+  const t=c.terms,cl=L[db.lang],w=cl.work[t.work],a=dayAmt(t);
+  const sec=a?Math.max(0,Math.floor((c.esc.lock-held(c.esc))/a)):0;
+  return`<div class="pic-eq">
+    <div class="eq-cell">
+      ${I(w[0],34)}
+      <strong>${w[1]}</strong>
+    </div>
+    <div class="eq-cell">
+      ${I('rupee',34)}
+      <strong>${inr(t.wage)}</strong>
+      <span>${cl.per[t.per]}</span>
+    </div>
+    <div class="eq-cell">
+      <div class="dys">${DAYS.map((d,x)=>`<i class="${t.days.includes(x)?'on':''}">${d}</i>`).join('')}</div>
+      <strong>${t.days.length} / 7</strong>
+      <span>${cl.q[t.pd??0]}</span>
+    </div>
+    <div class="eq-cell" style="background:var(--gov-green-bg)">
+      ${I('lock',34)}
+      <strong>${inr(c.esc.lock)}</strong>
+      <span>${sec}d Safe</span>
+    </div>
+  </div>`;
+}
+
+function renderWorkerUI(){
+  const l=L[db.lang];
+  const offers=db.c.map((c,i)=>[c,i]).filter(([c])=>c.status==='offer');
+  const active=db.c.map((c,i)=>[c,i]).filter(([c])=>c.status==='active');
+
+  if(tab==='work'){
+    return`<div class="pic-banner">
+      <div class="pic-scene">${PIC('worker',64)}</div>
+      <h1>${l.ui.wrk}</h1>
+      ${offers.length?`<button class="btn speak" onclick="tab='sign';render()">${I('file',22)}${l.ui.offers} (${offers.length})</button>`:''}
+    </div>
+    <div class="kpis">
+      <div class="kpi">${I('brief',26)}<b>${active.length}</b><span>${l.ui.wrk}</span></div>
+      <div class="kpi" style="background:var(--gov-green-bg)">${I('rupee',26)}<b>${inr(db.w.k)}</b><span>${l.ui.wallet}</span></div>
+      <div class="kpi">${I('file',26)}<b>${offers.length}</b><span>${l.ui.offers}</span></div>
+    </div>
+    ${active.length?active.map(([c,i])=>renderContractCard(c,i,'worker')).join(''):`<div class="card" style="text-align:center">
+      <div style="margin:10px auto">${PIC('listen-sign',76)}</div>
+      <button class="btn speak full" onclick="tab='sign';render()">${I('file',24)}${l.ui.offers} (${offers.length})</button>
+    </div>`}`;
+  }
+
+  if(tab==='sign'){
+    return`<div class="pic-banner">
+      <div class="pic-scene">${PIC('listen-sign',64)}</div>
+      <h1>${l.ui.offers} (${offers.length})</h1>
+    </div>
+    ${offers.length?offers.map(([c,i])=>{
+      const t=c.terms,cl=L[db.lang];
+      const summary=cl.sum(cl.work[t.work][1],t.wage,cl.per[t.per],t.days.length,t.pd);
+      const heard=!!offerHeard[t.id];
+      return`<article class="tk">
+        <div class="tkh">
+          <div><div class="tkt">${t.empName||'Employer'}</div><div class="tks">${t.id}</div></div>
+          <div class="shape-match" style="margin-left:auto;color:#0b1f3a">${shapeFingerprint(c.hash)}</div>
+        </div>
+        <div class="tkb">
+          ${renderPictureEquation(c)}
+          ${renderKaraoke('k-'+t.id,summary)}
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+            <button class="btn speak" onclick="speakText('${summary.replace(/'/g,"\\'")}','${db.lang}',{audioData:${c.voiceClip?`'${c.voiceClip}'`:'null'},onWord:(wi)=>highlightWord('k-${t.id}',wi),onEnd:()=>{offerHeard['${t.id}']=true;render();}})">${I('speaker',26)}1. ${l.ui.listen}</button>
+            <button class="btn green" ${heard?'':'disabled'} onclick="workerSignOffer(${i})">${I('thumb',26)}2. ${l.ui.sign}</button>
+          </div>
+          <div style="margin-top:12px;text-align:center">
+            <div class="qr-box" onclick="openQrModal(${i})" role="button" tabindex="0">
+              ${makeQrSvg(`saboot:${t.id}:${c.hash.slice(0,16)}`)}
+              <span class="qr-cap">${t.id}</span>
+            </div>
+          </div>
+        </div>
+      </article>`;
+    }).join(''):`<div class="card" style="text-align:center"><div style="margin:8px auto">${PIC('worker',74)}</div><h2>0 ${l.ui.offers}</h2></div>`}`;
+  }
+
+  if(tab==='pay'){
+    const own=db.w.tx.filter(x=>['pay','out'].includes(x.k));
+    return`<div class="pic-banner">
+      <div class="pic-scene">${PIC('bank-pay',64)}</div>
+      <h1>${l.ui.wallet}</h1>
+      <button class="speak-sq" onclick="speakText('${inr(db.w.k)}','${db.lang}')" aria-label="${l.ui.listen}">${I('speaker',26)}</button>
+    </div>
+    <div class="card" style="text-align:center">
+      <div class="amt-big">${inr(db.w.k)}</div>
+      <button class="btn green full" ${db.w.k?'':'disabled'} onclick="const a=db.w.k;db.w.k=0;tx('out',a,'Bank');saveDB();render();speakText(inr(a),'${db.lang}')">${I('bank',26)}${l.ui.cashout}</button>
+    </div>
+    <div class="card">
+      ${own.length?own.map(x=>`<div class="drow"><div><strong>${inr(x.amt)}</strong> · ${x.note}</div><span class="status-tag ${x.k==='pay'?'ok':'wait'}">${x.k==='pay'?'+ ₹':'Bank'}</span></div>`).join(''):`<div style="text-align:center;font-weight:800">₹0</div>`}
+    </div>`;
+  }
+
+  // Visual Star Trust Screen (1 to 4 Large Stars instead of complex gauge text)
+  const {t,tiers}=calcStats();
+  const starCount=t+1;
+  return`<div class="pic-banner">
+    <div class="pic-scene">${I('award',44)}</div>
+    <h1>${l.ui.trust} : ${starCount} / 4</h1>
+  </div>
+  <div class="card" style="text-align:center">
+    <div class="stars-row" aria-label="${starCount} out of 4 stars">
+      ${[1,2,3,4].map(n=>`<svg width="52" height="52" viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9" fill="${n<=starCount?'#ff6b00':'#e2e8f0'}" stroke="#0a2e5c" stroke-width="2"/></svg>`).join('')}
+    </div>
+    <div class="steps">${tiers.map((x,i)=>`<span class="${i<=t?'on':''}">${i+1} ★</span>`).join('')}</div>
+    <button class="btn speak hold full" id="hold" style="margin-top:12px" onpointerdown="hs()" onpointerup="hc()" onpointerleave="hc()">${I('share',24)}${l.ui.trust} (${starCount} ★)</button>
+    ${db.shares.map(x=>`<div class="drow"><strong>${x.tier} ★</strong><span class="status-tag ok">${I('check',18)}OK</span></div>`).join('')}
+  </div>`;
+}
+
+function renderEmployerUI(){
+  const l=L[db.lang];
+  const pendingApprovals=db.c.reduce((n,c)=>n+c.esc.days.filter(d=>d.st==='pending'||d.st==='disputed').length,0);
+  const totalLocked=db.c.reduce((n,c)=>n+c.esc.lock,0);
+
+  if(tab==='roster'){
+    return`<div class="pic-banner">
+      <div class="pic-scene">${PIC('employer',64)}</div>
+      <h1>${l.ui.roster}</h1>
+      <button class="btn green" onclick="tab='create';render()">${I('plus',24)}${l.ui.create}</button>
+    </div>
+    <div class="kpis">
+      <div class="kpi">${I('user',26)}<b>${db.c.filter(c=>c.status==='active').length}</b><span>${l.ui.wrk}</span></div>
+      <div class="kpi" style="background:var(--gov-green-bg)">${I('lock',26)}<b>${inr(totalLocked)}</b><span>₹ Safe</span></div>
+      <div class="kpi">${I('clock',26)}<b>${pendingApprovals}</b><span>${l.ui.approve}</span></div>
+    </div>
+    ${db.c.map((c,i)=>renderContractCard(c,i,'employer')).join('')}
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+      <button class="btn sm ghost" onclick="db.off=(db.off||0)+1;saveDB();sweepAutoPay();render();toast('+24h')">${I('clock',20)}+24h</button>
+      <button class="btn sm bad" onclick="ask('Reset?',()=>{localStorage.removeItem('saboot_gov_v1');db=null;initSeedData().then(render)})">Reset</button>
+    </div>`;
+  }
+
+  if(tab==='create'){
+    const preview=l.sum(l.work[draft.work][1],draft.wage||0,l.per[draft.per],draft.days.size,draft.pd);
+    return`<div class="pic-banner">
+      <div class="pic-scene">${PIC('employer',64)}</div>
+      <h1>${l.ui.create}</h1>
+    </div>
+    <div class="card">
+      <div class="card-hd"><div class="badge-pic">${I('brief',28)}</div><h2>1. ${l.ui.wrk}</h2></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+        <input class="inp" aria-label="Employer name" value="${draft.empName}" oninput="draft.empName=this.value">
+        <input class="inp" aria-label="Worker name" placeholder="${l.ui.wrk}" value="${draft.wrkName}" oninput="draft.wrkName=this.value">
+      </div>
+      <div class="grid3">${Object.entries(l.work).map(([k,[ic,name]])=>`<button class="tile" aria-pressed="${draft.work===k}" onclick="draft.work='${k}';render()">${I(ic,34)}<span>${name}</span></button>`).join('')}</div>
+    </div>
+
+    <div class="card">
+      <div class="card-hd"><div class="badge-pic">${I('rupee',28)}</div><h2>2. ₹</h2></div>
+      <div class="seg">${Object.entries(l.per).map(([k,name])=>`<button aria-pressed="${draft.per===k}" onclick="draft.per='${k}';render()">${name}</button>`).join('')}</div>
+      <input class="inp" type="number" min="1" style="font-size:1.5rem;font-weight:800" value="${draft.wage}" oninput="draft.wage=this.value">
+      <div class="chips">${{day:[350,500,650,800],month:[5000,8000,12000],piece:[15,25,50]}[draft.per].map(v=>`<button onclick="draft.wage='${v}';render()">₹${v}</button>`).join('')}</div>
+      <div class="days">${DAYS.map((d,i)=>`<button aria-pressed="${draft.days.has(i)}" onclick="draft.days.has(${i})?draft.days.delete(${i}):draft.days.add(${i});render()">${d}</button>`).join('')}</div>
+      <div class="chips">${l.q.map((n,i)=>`<button aria-pressed="${draft.pd===i}" onclick="draft.pd=${i};render()">${n}</button>`).join('')}</div>
+    </div>
+
+    <div class="card">
+      <div class="card-hd"><div class="badge-pic">${I('speaker',28)}</div><h2>3. ${l.ui.listen}</h2></div>
+      ${renderKaraoke('k-draft',preview)}
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn speak" onclick="speakText('${preview.replace(/'/g,"\\'")}','${db.lang}',{onWord:(wi)=>highlightWord('k-draft',wi)})">${I('speaker',24)}${l.ui.listen}</button>
+        <button class="btn ${recState.recording?'bad':'ghost'}" onclick="toggleVoiceRecord((data)=>{draft.voiceClip=data})">${I('mic',24)}${recState.recording?'Stop':draft.voiceClip?'Mic OK':'Mic'}</button>
+        <button class="btn green full" onclick="createOffer()">${I('check',26)}${l.ui.sign}</button>
+      </div>
+    </div>`;
+  }
+
+  if(tab==='approve'){
+    const rows=[];
+    db.c.forEach((c,i)=>c.esc.days.forEach((d,j)=>{if(d.st==='pending'||d.st==='disputed')rows.push({c,i,d,j});}));
+    return`<div class="pic-banner">
+      <div class="pic-scene">${PIC('vault',64)}</div>
+      <h1>${l.ui.approve} (${rows.length})</h1>
+    </div>
+    ${rows.length?rows.map(({c,i,d,j})=>`<div class="card">
+      <div class="card-hd"><div class="badge-pic">${I('user',28)}</div><h2>${c.terms.wrkName||l.ui.wrk} · ${inr(d.amt)}</h2><span class="status-tag ${d.st==='disputed'?'bad':'warn'}">${d.d}</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        ${d.st==='pending'?`<button class="btn green" onclick="settleDay(${i},${j},false).then(()=>render())">${I('check',24)}${l.ui.approve}</button><button class="btn bad" onclick="disputeDay(${i},${j})">${I('alert',24)}!</button>`:`<button class="btn green" onclick="resolveDispute(${i},${j},true)">${I('check',24)}${l.ui.approve}</button><button class="btn ghost" onclick="resolveDispute(${i},${j},false)">${I('undo',24)}₹</button>`}
+      </div>
+    </div>`).join(''):`<div class="card" style="text-align:center"><h2>0</h2></div>`}`;
+  }
+
+  const own=db.w.tx.filter(x=>['topup','fund','refund'].includes(x.k));
+  return`<div class="pic-banner">
+    <div class="pic-scene">${PIC('bank-pay',64)}</div>
+    <h1>${l.ui.wallet}</h1>
+  </div>
+  <div class="card" style="text-align:center">
+    <div class="amt-big">${inr(db.w.e)}</div>
+    <div class="chips" style="justify-content:center">${[1000,2500,5000,10000].map(v=>`<button onclick="db.w.e+=${v};tx('topup',${v},'Bank');saveDB();render()">+₹${v}</button>`).join('')}</div>
+  </div>
+  <div class="card">
+    ${own.map(x=>`<div class="drow"><div><strong>${inr(x.amt)}</strong> · ${x.note}</div></div>`).join('')}
+  </div>`;
+}
+
+function renderContractCard(c,i,role){
+  const t=c.terms,cl=L[db.lang],w=cl.work[t.work],open=nowD()<c.until&&c.status==='active';
+  const a=dayAmt(t);
+  const stTag=c.status==='offer'?`<span class="status-tag warn">${I('clock',18)}${cl.ui.offers}</span>`:c.status==='withdrawn'?`<span class="status-tag bad">${cl.ui.cancel}</span>`:open?`<span class="status-tag warn">24h</span>`:`<span class="status-tag ok">${I('shield',18)}OK</span>`;
+
+  return`<article class="tk">
+    <div class="tkh">
+      <div>
+        <div class="tkt">${role==='employer'?(t.wrkName||cl.ui.wrk):(t.empName||cl.ui.emp)}</div>
+        <div class="tks">${t.id}</div>
+      </div>
+      <div class="shape-match" style="margin-left:auto;color:#0b1f3a">${shapeFingerprint(c.hash)}</div>
+      ${stTag}
+    </div>
+    <div class="tkb">
+      ${renderPictureEquation(c)}
+      <div id="ver-${i}" style="margin:6px 0"></div>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px">
+        <button class="btn speak" onclick="speakText('${cl.sum(w[1],t.wage,cl.per[t.per],t.days.length,t.pd).replace(/'/g,"\\'")}','${db.lang}',{audioData:${c.voiceClip?`'${c.voiceClip}'`:'null'}})">${I('speaker',24)}${cl.ui.listen}</button>
+        <button class="btn sm ghost" onclick="verifyContract(${i})">${I('search',20)}${cl.ui.verify}</button>
+        <button class="btn sm ghost" onclick="openPack(${i})">${I('file',20)}ID</button>
+        ${role==='employer'?`<button class="btn sm bad" onclick="tamperDemo(${i})">${I('alert',20)}Test</button>`:''}
+        ${role==='worker'&&open?`<button class="btn sm bad" onclick="workerCancel(${i})">${I('undo',20)}24h ${cl.ui.cancel}</button>`:''}
+        <div class="qr-box" style="margin-left:auto" onclick="openQrModal(${i})" role="button" tabindex="0">
+          ${makeQrSvg(`saboot:${t.id}:${c.hash.slice(0,16)}`)}
+          <span class="qr-cap">${t.id}</span>
+        </div>
+      </div>
+
+      ${c.status==='active'?`<div class="esc-box">
+        ${role==='employer'?`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+          <button class="btn sm green" onclick="fundEscrow(${i},1)">${I('lock',20)}+1d (${inr(a)})</button>
+          <button class="btn sm green" onclick="fundEscrow(${i},${t.days.length})">${I('lock',20)}+${t.days.length}d (${inr(a*t.days.length)})</button>
+          <button class="btn sm ghost" onclick="reclaimEscrow(${i})">${I('undo',20)}₹</button>
+        </div>`:`<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
+          ${t.per==='piece'?`<input class="inp" type="number" min="1" style="width:100px" value="${pieceInputs[t.id]||10}" oninput="pieceInputs['${t.id}']=this.value" aria-label="Count">`:''}
+          <button class="btn green full" onclick="workerCheckIn(${i})">${I('check',26)}${cl.ui.worked}</button>
+        </div>`}
+        ${[...c.esc.days].map((d,j)=>[d,j]).reverse().slice(0,3).map(([d,j])=>`<div class="drow">
+          <div><strong>${d.d}</strong> · <strong>${inr(d.amt)}</strong></div>
+          ${d.st==='pending'&&role==='employer'?`<div style="display:flex;gap:6px"><button class="btn sm green" onclick="settleDay(${i},${j},false).then(()=>render())">${I('check',20)}${cl.ui.approve}</button><button class="btn sm bad" onclick="disputeDay(${i},${j})">!</button></div>`:`<span class="status-tag ${d.st==='paid'||d.st==='auto'?'ok':d.st==='disputed'?'bad':'wait'}">${d.st==='auto'?'24h OK':d.st==='paid'?'OK':d.st==='disputed'?'!':'...'}</span>`}
+        </div>`).join('')}
+      </div>`:''}
+    </div>
+  </article>`;
+}
+
+/* ==========================================================================
+   MASTER RENDER
+   ========================================================================== */
+function render(){
+  if(!db)return;
+  const l=L[db.lang];
+
+  $('#topbar').innerHTML=`<div class="topbar-in">
+    <button class="brand" onclick="db.role=null;saveDB();render()">
+      ${EMBLEM}
+      <span>
+        <span class="brand-title">SABOOT · सबूत</span>
+        <span class="brand-sub">23 INDIAN LANGUAGES</span>
+      </span>
+    </button>
+    <div class="top-actions">
+      <button class="lang-pill" onclick="openLangModal()">
+        ${I('globe',24)}
+        <span>${l.n}</span>
+        ${I('speaker',22)}
+      </button>
+    </div>
+  </div>`;
+
+  $('#rolebar').innerHTML=`<div class="role-bar-in">
+    <button class="role-tab" aria-pressed="${db.role==='worker'}" onclick="setRole('worker')">${I('user',24)}<span>${l.ui.wrk}</span></button>
+    <button class="role-tab" aria-pressed="${db.role==='employer'}" onclick="setRole('employer')">${I('brief',24)}<span>${l.ui.emp}</span></button>
+  </div>`;
+
+  if(!db.role){
+    $('#bnav').style.display='none';
+    $('#app').innerHTML=renderOnboarding();
+    return;
+  }
+
+  $('#bnav').style.display='grid';
+  const isEmp=db.role==='employer';
+  const offersCount=db.c.filter(c=>c.status==='offer').length;
+  const pendingCount=db.c.reduce((n,c)=>n+c.esc.days.filter(d=>d.st==='pending'||d.st==='disputed').length,0);
+
+  const navItems=isEmp?[
+    ['roster','shield',l.ui.roster,0],
+    ['create','plus',l.ui.create,0],
+    ['approve','check',l.ui.approve,pendingCount],
+    ['bizwal','wallet',l.ui.wallet,0]
+  ]:[
+    ['work','brief',l.ui.wrk,0],
+    ['sign','file',l.ui.offers,offersCount],
+    ['pay','wallet',l.ui.wallet,0],
+    ['trust','award',l.ui.trust,0]
+  ];
+
+  $('#bnav').innerHTML=navItems.map(([k,ic,lbl,b])=>`<button aria-current="${tab===k}" onclick="tab='${k}';render()">
+    ${I(ic,26)}
+    <span>${lbl}</span>
+    ${b?`<span class="nbadge">${b}</span>`:''}
+  </button>`).join('');
+
+  $('#app').innerHTML=isEmp?renderEmployerUI():renderWorkerUI();
+}
+
+let ht;
+function hs(){const b=$('#hold');if(!b)return;b.classList.add('go');ht=setTimeout(()=>{const z=calcStats();db.shares.unshift({tier:String(z.t+1),ts:new Date(nowD()).toISOString()});saveDB();render();toast('OK');},1200);}
+function hc(){clearTimeout(ht);const b=$('#hold');b&&b.classList.remove('go');}
+
+if('speechSynthesis' in window)speechSynthesis.onvoiceschanged=()=>render();
+initSeedData().then(()=>{sweepAutoPay();render();});
+setInterval(sweepAutoPay,60000);
+</script>
+</body>
+</html>
